@@ -1,7 +1,7 @@
 from flask import Flask , render_template , request , redirect , url_for, flash
 from flask_mysqldb import MySQL
 from flask_wtf.csrf import CSRFProtect  # para que formulario de login tenga codigo token para csrf
-from flask_login import LoginManager , login_user, logout_user, login_required
+from flask_login import LoginManager , login_user, logout_user, login_required, current_user
 from flask_mail import Mail
 from utils.EmailManager import EmailManager
 from dotenv import load_dotenv
@@ -9,6 +9,7 @@ from config import config
 
 from models.ModelUser import ModelUser
 from models.entities.User import User
+# from routers.authRouter import authRouter
 
 
 load_dotenv()
@@ -19,6 +20,8 @@ login_manager_app = LoginManager(app)
 csrf = CSRFProtect()  # para que formulario de login tenga codigo token para csrf
 
 mail = Mail()
+
+# app.register_blueprint(authRouter)
 
 @login_manager_app.user_loader
 def load_user(id):
@@ -42,21 +45,9 @@ def register():
                         )
             registerUser = ModelUser.register(db, user)
             if registerUser:                 
-                login_user(user)
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("logued user?")
-                print(user.password)
-                print(user.email)
-                print(user.id)
-                print(user.is_active)
-                print(user.__str__)
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                flash("Usuario registrado")
-                
+                loguedUser = ModelUser.login(db, user)
+                login_user(loguedUser)                
                 EmailManager.sendEmail(user.email)
-
                 return redirect(url_for('home'))
             else:                
                 flash("Email ya existe, intenta logueandote")
@@ -76,17 +67,6 @@ def login():
         if loguedUser != None:
             if loguedUser.password:
                 login_user(loguedUser)
-                
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("logued user?")
-                print(loguedUser.password)
-                print(loguedUser.email)
-                print(loguedUser.id)
-                print(loguedUser.is_active)
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                print("********************************* NO FUNCIONA CUANDO ME REGISTRO Y LOGUEO A LA VEZ, POR QUE??? ***************************************************")
-                flash("Usuario registrado")
                 return redirect(url_for('home'))
             else:
                 flash("Credenciales erroneas")
@@ -105,12 +85,15 @@ def logout():
 @app.route('/home')
 @login_required
 def home():
+    if current_user.role == "student":
         return render_template('home.html')
+    elif current_user.role == "student":
+        return render_template('home.html', studentList = studentList)
+    else:
+        studentList = ModelUser.getAllByRoleForRender(db, "student")
+        teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
+        return render_template('home.html', studentList = studentList, teacherList = teacherList)
 
-@app.route('/protected')
-@login_required
-def protected():
-        return "<h1>SOY UN CONTENIDO SOLO PARA AUTHENTICADOS <h1/>"
 
 def status_401(error):
      return redirect(url_for('login'))

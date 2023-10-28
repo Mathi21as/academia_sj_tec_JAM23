@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Academia - Home{% endblock %}
 
 
 {% block body %}
@@ -11,5 +11,74 @@
 </div>
 
 <a class="btn btn-secondary" href="{{url_for('logout')}}"> Cerrar sesion! </a>
+
+{% if current_user.role == "admin" or current_user.role == "teacher"%}
+<div class="container studentsList border border-3 rounded border-light pt-2 mt-4">    
+    <h4>Listado de estudiantes</b></h4>
+    {% if studentList %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in studentList %}
+                <tr>
+                    <td>{{ student[0] }}</td>
+                    <td>{{ student[4] }}</td>
+                    <td>{{ student[1] }}</td>
+                    <td>{{ student[2] }}</td>
+                    <td>{{ student[3] }}</td>
+                    <td>{{ student[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No hay estudiantes cargados</p>
+    {% endif %}
+</div>
+{% endif %}
+
+{% if current_user.role == "admin" %}
+<div class="container teacherList border border-3 rounded border-light pt-2 mt-4">    
+    <h4>Listado de profesores</b></h4>
+    {% if teacherList %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for teacher in teacherList %}
+                <tr>
+                    <td>{{ teacher[0] }}</td>
+                    <td>{{ teacher[4] }}</td>
+                    <td>{{ teacher[1] }}</td>
+                    <td>{{ teacher[2] }}</td>
+                    <td>{{ teacher[3] }}</td>
+                    <td>{{ teacher[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No hay profesores cargados</p>
+    {% endif %}
+
+</div>
+{% endif %}
 
 {% endblock %}
