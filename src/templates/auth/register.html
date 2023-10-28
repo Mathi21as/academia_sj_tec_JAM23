@@ -1,0 +1,68 @@
+{% extends './base.html' %}
+
+{% block title %}Register{% endblock %}
+
+<!-- css propio -->
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/login.css')}}">
+{% endblock %}
+
+{% block body %}
+<form  class="form-signin" action="/register" method="POST"> 
+    <img class="mb-4" src="{{url_for('static' , filename = 'img/TALENTO-TEC-capacitate-de-PROGRAMACION.jpg')}}" alt="" width="72" height="57">
+    {% with messages = get_flashed_messages() %}
+
+    {% if messages  %}
+      <br/>
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif  %}
+
+    {% endwith %}
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}"> <!--  para que formulario de login tenga codigo token para csrf-->
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="name" placeholder="Pepe">
+      <label for="name">Nombre</label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="last_name" placeholder="Hoguito">
+      <label for="last_name">Apellido</label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="phone" placeholder="264789871">
+      <label for="phone">Telefono </label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="dni" placeholder="94150874 ">
+      <label for="dni">Dni </label>
+    </div>
+    <div class="form-floating mt-2">
+      <input type="email" class="form-control" name="email" placeholder="email@gmail.com">
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mt-2">
+      <input type="password" class="form-control" name="password" placeholder="Password">
+      <label for="password">Password</label>
+    </div>
+    <div class="form-floating mt-2">
+      <input type="password" class="form-control" name="password-confirm" placeholder="Password">
+      <label for="password-confirm">Confirm password</label>
+    </div>
+
+    <div class="checkbox mb-3">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+  </form>
+{% endblock %}
