@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+
+{% block title %}Register{% endblock %}
+
+<!-- css propio -->
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/login.css')}}">
+{% endblock %}
+
+{% block body %}
+<form  class="form-signin" action="/course" method="POST"> 
+    <img class="mb-4" src="{{url_for('static' , filename = 'img/TALENTO-TEC-capacitate-de-PROGRAMACION.jpg')}}" alt="" width="72" height="57">
+    {% with messages = get_flashed_messages() %}
+
+    {% if messages  %}
+      <br/>
+      {% for message in messages %}
+      <div class="alert alert-warning alert-dismissible" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif  %}
+
+    {% endwith %}
+    <h3 class="h3 mb-3 fw-normal">FORMULARIO PARA AGREGAR CURSO NUEVO PENDIENTEe</h3>
+    <h3 class="h3 mb-3 fw-normal">FORMULARIO PARA AGREGAR CURSO NUEVO PENDIENTEEEEEE</h3>
+
+    <input type="hidden" name="csrf_token" value="{{csrf_token()}}"> <!--  para que formulario de login tenga codigo token para csrf-->
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="course_name" placeholder="Angular avanzado">
+      <label for="course_name">Nombre del curso</label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="course_duration" placeholder="30 SEMANAS">
+      <label for="course_duration">Duracion</label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="course_description" placeholder="descripcion...">
+      <label for="course_description">Descripcion </label>
+    </div>
+
+    <div class="form-floating mt-2">
+      <input type="text" class="form-control" name="course_teacher" placeholder="Pepe Hpoundf ">
+      <label for="course_teacher">Profesor a cargo </label>
+    </div>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Crear curso</button>
+  </form>
+{% endblock %}

@@ -31,6 +31,53 @@ def load_user(id):
 def index():
     return redirect(url_for('login'))
 
+@app.route('/dashboard')
+@login_required
+def dashboard():
+    if current_user.role == "student":
+        return render_template('dashboard.html')
+    elif current_user.role == "teacher":
+        studentList = ModelUser.getAllByRoleForRender(db, "student")
+        return render_template('dashboard.html', studentList = studentList)
+    elif current_user.role == "admin":
+        studentList = ModelUser.getAllByRoleForRender(db, "student")
+        teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
+        return render_template('dashboard.html', studentList = studentList, teacherList = teacherList)
+
+
+# ------------------ CURSOS ------------------
+# ------------------ CURSOS ------------------
+@app.route('/course', methods=['GET', 'POST'])
+@login_required
+def course():
+    if current_user.role == "student":
+        return render_template('dashboard.html')
+    elif current_user.role == "teacher" or current_user.role == "admin":
+        if request.method == 'GET' :
+            return render_template('courseAddForm.html')
+        elif request.method == 'POST':
+            print("AGREGANDO CURSO! ------------------ CURSOS ------------------")
+            print("AGREGANDO CURSO! ------------------ CURSOS ------------------")
+            print("AGREGANDO CURSO! ------------------ CURSOS ------------------")
+            print("AGREGANDO CURSO! ------------------ CURSOS ------------------")
+            print("AGREGANDO CURSO! ------------------ CURSOS ------------------")
+        elif request.method == 'PUT':
+            print("EDITANDO CURSO! ------------------ CURSOS ------------------")
+            print("EDITANDO CURSO! ------------------ CURSOS ------------------")
+            print("EDITANDO CURSO! ------------------ CURSOS ------------------")
+            print("EDITANDO CURSO! ------------------ CURSOS ------------------")
+            
+
+
+
+
+
+
+# ------------------ CURSOS ------------------
+
+
+# ------------------ SESIONES ------------------
+# ------------------ SESIONES ------------------
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':      
@@ -48,7 +95,7 @@ def register():
                 loguedUser = ModelUser.login(db, user)
                 login_user(loguedUser)                
                 EmailManager.sendEmail(user.email)
-                return redirect(url_for('home'))
+                return redirect(url_for('dashboard'))
             else:                
                 flash("Email ya existe, intenta logueandote")
                 return render_template('auth/login.html')
@@ -67,7 +114,7 @@ def login():
         if loguedUser != None:
             if loguedUser.password:
                 login_user(loguedUser)
-                return redirect(url_for('home'))
+                return redirect(url_for('dashboard'))
             else:
                 flash("Credenciales erroneas")
                 return render_template('auth/login.html')
@@ -81,25 +128,17 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
-
-@app.route('/home')
-@login_required
-def home():
-    if current_user.role == "student":
-        return render_template('home.html')
-    elif current_user.role == "student":
-        return render_template('home.html', studentList = studentList)
-    else:
-        studentList = ModelUser.getAllByRoleForRender(db, "student")
-        teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
-        return render_template('home.html', studentList = studentList, teacherList = teacherList)
+# ------------------ SESIONES ------------------
 
 
+# ------------------ MANEJO DE ERRORES ------------------
+# ------------------ MANEJO DE ERRORES ------------------
 def status_401(error):
      return redirect(url_for('login'))
 
 def status_404(error):
      return "<h1> Pagina no encontrada! <h1/>",404
+# ------------------ MANEJO DE ERRORES ------------------
 
 if __name__ == '__main__':
     app.config.from_object(config['development'])
