@@ -9,6 +9,7 @@ CREATE TABLE `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(150) NOT NULL,
   `role` varchar(7) NOT NULL,
+  `gender` varchar(50),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `dni_UNIQUE` (`dni`),

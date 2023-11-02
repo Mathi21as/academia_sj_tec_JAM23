@@ -88,7 +88,8 @@ def register():
                         request.form['phone'] , 
                         request.form['dni'] ,
                         request.form['email'] , 
-                        request.form['password']
+                        request.form['password'], 
+                        request.form['gender'] 
                         )
             registerUser = ModelUser.register(db, user)
             if registerUser:                 
@@ -108,7 +109,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':        
-        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'] )
+        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'] , None)
         loguedUser = ModelUser.login(db, user)
 
         if loguedUser != None:
