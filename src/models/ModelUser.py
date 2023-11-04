@@ -37,7 +37,6 @@ class ModelUser():
                         WHERE email = '{}'""".format(user.email)
             cursor.execute(sql)
             row = cursor.fetchone()
-
             if row != None:
                 validPassword = User.check_password(row[6] , user.password)
                 return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8])

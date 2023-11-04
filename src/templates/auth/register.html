@@ -25,7 +25,7 @@
     {% endwith %}
     <h1 class="h3 mb-3 fw-normal">Register</h1>
 
-    <input type="hidden" name="csrf_token" value="{{csrf_token()}}"> <!--  para que formulario de login tenga codigo token para csrf-->
+    <input type="hidden" name="csrf_token" value="{{csrf_token}}"> <!--  para que formulario de login tenga codigo token para csrf-->
     <div class="form-floating mt-2">
       <input type="text" class="form-control" name="name" placeholder="Pepe">
       <label for="name">Nombre</label>
