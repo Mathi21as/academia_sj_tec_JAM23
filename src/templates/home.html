@@ -5,6 +5,12 @@
 
 {% block body %}
 
+<nav class="bg-danger">
+    {% if current_user.role == "student" %}
+    <a href="/inscripcion">Inscripciones</a>
+    {% endif %}
+</nav>
+
 <div class="alert alert-success">
     <h1>Bienvenido {{current_user.email}}</h1>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
