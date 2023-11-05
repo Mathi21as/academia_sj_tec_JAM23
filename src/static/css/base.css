@@ -1,0 +1,51 @@
+
+.header{
+    background-color:#080C1E;
+    height: 80px;
+    width: 100%;
+}
+
+.goldenDivider{
+    background-color: #ffbf5f;
+    height: 8px;
+    width: 100%;
+    display: block;
+}
+
+.footer{    
+    background-color: #080C1E;
+    height: 177px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-right: 15%;
+}
+
+.footer .logo img{
+    height: 100px;
+    width: 200px;
+}
+
+.footer .info{
+    font-weight: 400;
+    line-height: 30px;
+    color: #FAFAFA;
+}
+.footer .info .title{
+    size: 18px;    
+}
+.footer .info .infoItem{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+.footer .info .infoItem img{
+    height: 15px;
+    margin-right: 10px;
+}
+
+.footer .info .infoItem p{
+    size: 14px;
+    
+}
