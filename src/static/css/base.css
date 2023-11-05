@@ -1,19 +1,28 @@
 
+
+                              
+/* VARIABLES COMUNES  */
+:root{
+    --main-orange : #FFBF5F;
+
+    --main-background-dark : #080C1E;
+  }
+
 .header{
-    background-color:#080C1E;
+    background-color:var(--main-background-dark);   
     height: 80px;
     width: 100%;
 }
 
 .goldenDivider{
-    background-color: #ffbf5f;
+    background-color: var(--main-orange);    
     height: 8px;
     width: 100%;
     display: block;
 }
 
 .footer{    
-    background-color: #080C1E;
+    background-color: var(--main-background-dark);  
     height: 177px;
     width: 100%;
     display: flex;
@@ -49,3 +58,4 @@
     size: 14px;
     
 }
+
