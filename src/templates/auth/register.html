@@ -60,8 +60,7 @@
           <p class="fieldDetails ">*Campo obligatorio </p>
         </div>
       </div>
-
-      <a class="btn btn-signup" href="{{url_for('register')}}"> CREA TU CUENTA </a>
+      <button class="btn btn-signup" type="submit">CREA TU CUENTA</button>
 
       {% with messages = get_flashed_messages() %}
       {% if messages  %}

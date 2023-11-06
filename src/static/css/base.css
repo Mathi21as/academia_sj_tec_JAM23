@@ -17,6 +17,10 @@
     width: 100%;
     display: block;
 }
+.baseBody{
+    background-color: var(--main-background-dark); 
+    color: var(--main-orange);
+}
 
 .footer{
     background-color: var(--main-background-dark);
@@ -56,3 +60,58 @@
     
 }
 
+
+/* CLASES COMUNES LISTAS - TABLAS   */
+
+.containerTableList{
+    border: 1px solid var(--main-orange);
+    border-radius: 40px;
+    padding: 40px;
+    margin-top: 60px;
+    margin-bottom:30px;
+}
+
+.tableList{
+    background-color: #080c1e;    
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+
+.tableList thead{
+    background-color: var(--main-orange);
+}
+.tableList tr{
+    
+}
+.tableList th{    
+   padding-left: 20px;
+   padding-right: 20px;
+}
+.tableList th:first-child {
+    border-top-left-radius: 8px ;
+    border-bottom-left-radius: 8px ;
+}
+
+.tableList th:last-child {
+    border-top-right-radius: 8px ;
+    border-bottom-right-radius: 8px ;
+}
+
+.tableList tbody{
+    color: var(--main-orange);
+}
+.tableList tr{
+    /*  ESTAS PROPS DE SWADOW IMITAN VISUALMENTE AL BORDE
+     YA QUE NO PUEDO CAMBIARLO EN LAS PROPS DE LA TABLA  */
+   box-shadow: 0 0 0 1px var(--main-orange);
+   border-radius: 8px;   
+}
+.tableList thead>tr{
+    box-shadow: none !important;
+}
+
+.tableList td{
+    padding-left: 20px;
+    padding-right: 20px;
+    border: none;
+}

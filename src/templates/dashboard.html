@@ -19,10 +19,15 @@
 <a class="btn btn-secondary" href="{{url_for('logout')}}"> Cerrar sesion! </a>
 
 
-<div class="container CoursesList border border-3 rounded border-light pt-2 mt-4">    
+<div class="container containerTableList CoursesList">    
     <h4>Listado de cursos</b></h4>
+    {% if current_user.role == "admin" or current_user.role == "teacher"%}
+    <div class="container actionButons">
+        <a class="btn btn-primary" href="/add-course" role="button">Agregar curso</a>
+    </div>
+    {% endif %}
     {% if courseList %}
-    <table class="table table-striped">
+    <table class="table tableList">
         <thead>
             <tr>
                 <th scope="col">ID</th>
@@ -52,22 +57,19 @@
     {% else %}
         <p>No hay cursos cargados</p>
     {% endif %}
+
 </div>
 
-{% if current_user.role == "admin" or current_user.role == "teacher"%}
-<div class="container actionButons border border-3 rounded border-light pt-2 mt-4">
-    <a class="btn btn-primary" href="/add-course" role="button">Agregar curso</a>
-</div>
-{% endif %}
+
 
 {% if current_user.role == "admin" or current_user.role == "teacher"%}
-<div class="container studentsList border border-3 rounded border-light pt-2 mt-4">    
+<div class="container studentsList containerTableList">    
     <h4>Listado de estudiantes</b></h4>
     {% if studentList %}
-    <table class="table table-striped">
+    <table class="table tableList">
         <thead>
             <tr>
-                <th scope="col">ID</th>
+                <th scope="col">ID</th> 
                 <th scope="col">Dni</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Apellido</th>
@@ -95,10 +97,10 @@
 {% endif %}
 
 {% if current_user.role == "admin" %}
-<div class="container teacherList border border-3 rounded border-light pt-2 mt-4">    
+<div class="container teacherList containerTableList">    
     <h4>Listado de profesores</b></h4>
     {% if teacherList %}
-    <table class="table table-striped">
+    <table class="table tableList">
         <thead>
             <tr>
                 <th scope="col">ID</th>
