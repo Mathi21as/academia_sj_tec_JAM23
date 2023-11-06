@@ -1,7 +1,8 @@
-class Course:
+class Course():
 
-    def __int__(self, id, name, duration, attendance, idTeacher):
+    def __init__ (self, id, idTeacher, name, duration, description):
         self.id = id
+        self.id_teacher = idTeacher
         self.name = name
         self.duration = duration
-        self.idTeacher = idTeacher
+        self.description = description

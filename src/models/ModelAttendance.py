@@ -5,6 +5,7 @@ class ModelAttendance:
             sql = "INSERT INTO attendance VALUES(%i, %i, %s, %i);"
             cursor.execute(sql, attendance.id, attendance.idInscription, attendance.date, attendance.present)
             db.connection.commit()
+            cursor.close()
             return True
         except Exception as ex:
             return str(ex)

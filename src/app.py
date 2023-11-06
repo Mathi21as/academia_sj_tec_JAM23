@@ -12,6 +12,7 @@ from models.ModelCourse import ModelCourse
 
 from models.ModelUser import ModelUser
 from models.entities.User import User
+from models.entities.Course import Course
 # from routers.authRouter import authRouter
 
 
@@ -114,7 +115,41 @@ def inscription():
         return
     else:
         courseList = ModelCourse.findAll(db)
-        return render_template("courseAddForm.html", courseList = courseList, csrf_token = csrf)
+        return render_template("inscripcionCurso.html", courseList = courseList, csrf_token = csrf)
+
+@app.route("/add-course", methods=['GET', 'POST'])
+@login_required
+def addCourse():
+    if(request.method == "POST"):
+        course = Course(
+            None,
+            request.form['course_name'],
+            request.form['course_description'],
+            request.form['course_duration'],
+            request.form['course_teacher'])
+        ModelCourse.create(db, course)
+        return redirect(url_for('dashboard'))
+    else:
+        teachers = ModelUser.getAllByRoleForRender(db, "teacher")
+        return render_template("courseAddForm.html", csrf_token = csrf, teachers = teachers)
+
+@app.route("/edit-course/<id>", methods=['GET', 'POST'])
+@login_required
+def editCourse(id):
+    if(request.method == "POST"):
+        print("en post de edit course: " + request.form['course_teacher'])
+        course = Course(
+            None,
+            request.form['course_teacher'],
+            request.form['course_name'],
+            request.form['course_duration'],
+            request.form['course_description'])
+        ModelCourse.update(db, course, id)
+        return redirect(url_for('dashboard'))
+    else:
+        course = ModelCourse.findById(db, id)
+        teachers = ModelUser.getAllByRoleForRender(db, "teacher")
+        return render_template("courseAddForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
 
 def status_401(error):
      return redirect(url_for('login'))

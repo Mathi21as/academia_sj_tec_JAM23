@@ -4,48 +4,95 @@
 
 <!-- css propio -->
 {% block customCSS %}
-<link rel="stylesheet" href="{{url_for('static', filename = 'css/login.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/courseAddForm.css')}}">
 {% endblock %}
 
 {% block body %}
-<form  class="form-signin" action="/course" method="POST"> 
-    <img class="mb-4" src="{{url_for('static' , filename = 'img/TALENTO-TEC-capacitate-de-PROGRAMACION.jpg')}}" alt="" width="72" height="57">
-    {% with messages = get_flashed_messages() %}
 
-    {% if messages  %}
-      <br/>
-      {% for message in messages %}
-      <div class="alert alert-warning alert-dismissible" role="alert">
-          <strong>{{ message }}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endfor %}
-    {% endif  %}
-
-    {% endwith %}
-    <h3 class="h3 mb-3 fw-normal">FORMULARIO PARA AGREGAR CURSO NUEVO PENDIENTEe</h3>
-    <h3 class="h3 mb-3 fw-normal">FORMULARIO PARA AGREGAR CURSO NUEVO PENDIENTEEEEEE</h3>
-
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}"> <!--  para que formulario de login tenga codigo token para csrf-->
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="course_name" id="course_name" placeholder="Angular avanzado">
-      <label for="course_name">Nombre del curso</label>
+<div class="main_card">
+    <div class="crear_curso_div">
+        <a href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30px" height="50px"><path d="M32 15H3.41l8.29-8.29-1.41-1.42-10 10a1 1 0 0 0 0 1.41l10 10 1.41-1.41L3.41 17H32z" style="fill:#FFBF5F" data-name="4-Arrow Left"/></svg></a>
+        {% if mode == "edit" %}
+            <h4>Editar curso</h4>
+        {% else %}
+            <h4>Crear curso</h4>
+        {% endif %}
     </div>
+    {% if mode == "edit" %}
+        <form class="form-signin form_div" action="/edit-course/{{course.id}}" method="POST">
+    {% else %}
+        <form class="form-signin form_div" action="/add-course" method="POST">
+    {% endif %}
+        <div class="form_fields">
+            <input type="image" width="120" height="120">
+        {% with messages = get_flashed_messages() %}
 
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="course_duration" id="course_duration" placeholder="30 SEMANAS">
-      <label for="course_duration">Duracion</label>
-    </div>
+        {% if messages  %}
+          <br/>
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+        {% endif  %}
 
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="course_description" id="course_description" placeholder="descripcion...">
-      <label for="course_description">Descripcion </label>
-    </div>
+        {% endwith %}
+        <div class="form">
+            <input type="hidden" name="csrf_token" value="{{csrf_token}}"> <!--  para que formulario de login tenga codigo token para csrf-->
+            <div class="form-floating mt-2">
+              {% if mode == "edit" %}
+                <input type="text" class="form-control" name="course_name" id="course_name" value="{{course.name}}" placeholder="Angular avanzado" required>
+                {% else %}
+                <input type="text" class="form-control" name="course_name" id="course_name" placeholder="Angular avanzado" required>
+                {% endif %}
+              <label for="course_name">Nombre del curso</label>
+                <p>* Campo obligatorio</p>
+            </div>
 
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="course_teacher" id="course_teacher" placeholder="Pepe Hpoundf ">
-      <label for="course_teacher">Profesor a cargo </label>
+            <div class="form-floating mt-2">
+                {% if mode == "edit" %}
+                    <input type="text" class="form-control" name="course_duration" value="{{course.duration}}" id="course_duration" placeholder="30 SEMANAS" required>
+                {% else %}
+                    <input type="text" class="form-control" name="course_duration" id="course_duration" placeholder="30 SEMANAS" required>
+                {% endif %}
+                <label for="course_duration">Duracion</label>
+                <p>* Campo obligatorio</p>
+            </div>
+
+            <div class="mt-2">
+                <label for="course_description">Descripcion </label>
+                {% if mode == "edit" %}
+                    <textarea name="course_description" id="course_description">{{course.description}}</textarea>
+                {% else %}
+                    <textarea name="course_description" id="course_description"></textarea>
+                {% endif %}
+                <p>* Campo obligatorio</p>
+            </div>
+
+            <div class="mt-2">
+                <label for="course_teacher">Profesor a cargo: </label>
+                {% if mode == "edit" %}
+                    <select name="course_teacher" onselect="{{course.id_teacher.id}}" id="course_teacher">
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher[0] }}">{{ teacher[1] }} {{ teacher[2] }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <select name="course_teacher" id="course_teacher">
+                        <option value="">-- Seleccione el profesor de este curso --</option>
+                        {% for teacher in teachers %}
+                            <option value="{{ teacher[0] }}">{{ teacher[1] }} {{ teacher[2] }}</option>
+                        {% endfor %}
+                    </select>
+                {% endif %}
+                <p>* Campo obligatorio</p>
+            </div>
+        </div>
+        </div>
+        <button class="w-100" type="submit">Crear curso</button>
+      </form>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Crear curso</button>
-  </form>
+</div>
+
 {% endblock %}

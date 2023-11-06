@@ -21,7 +21,8 @@ class ModelUser():
                 User.hash_password(user.password), 
                 user.role,
                 user.gender))
-            db.connection.commit()            
+            db.connection.commit()
+            cursor.close()
             return True
         except Exception as ex:
             if ex.args[0] == 1062:
@@ -37,6 +38,7 @@ class ModelUser():
                         WHERE email = '{}'""".format(user.email)
             cursor.execute(sql)
             row = cursor.fetchone()
+            cursor.close()
             if row != None:
                 validPassword = User.check_password(row[6] , user.password)
                 return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8])
@@ -53,7 +55,7 @@ class ModelUser():
                         WHERE id = '{}'""".format(id)
             cursor.execute(sql)
             row = cursor.fetchone()
-
+            cursor.close()
             if row != None:
                 return User(row[0], row[1], row[2], row[3], row[4], row[5] , None, row[6], row[7])
             else:
@@ -71,7 +73,7 @@ class ModelUser():
                         WHERE role = '{}'""".format(role)
             cursor.execute(sql)
             rows = cursor.fetchall()
-            
+            cursor.close()
             for row in rows:
                 userData =[row[0], row[1], row[2], row[3], row[4], row[5], row[6]]
                 userList.append(userData)

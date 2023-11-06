@@ -12,7 +12,7 @@
 </nav>
 
 <div class="alert alert-success">
-    <h3>Bienvenido {{current_user.email}}</h1>
+    <h3>Bienvenido {{current_user.email}}</h3>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
 
@@ -26,22 +26,25 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Dni</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Email</th>
+                <th scope="col">Duracion</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Profesor</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
             {% for course in courseList %}
                 <tr>
                     <td>{{ course[0] }}</td>
-                    <td>{{ course[4] }}</td>
-                    <td>{{ course[1] }}</td>
                     <td>{{ course[2] }}</td>
                     <td>{{ course[3] }}</td>
-                    <td>{{ course[5] }}</td>
+                    <td>{{ course[4] }}</td>
+                    <td>{{ course[1] }}</td>
+                    <td style="width: min-content">
+                        <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
+                        <a class="btn btn-danger" href="/delete-course">eliminar</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
@@ -53,8 +56,7 @@
 
 {% if current_user.role == "admin" or current_user.role == "teacher"%}
 <div class="container actionButons border border-3 rounded border-light pt-2 mt-4">
-    <a class="btn btn-primary"  href="/course" role="button">Agregar curso</a>
-
+    <a class="btn btn-primary" href="/add-course" role="button">Agregar curso</a>
 </div>
 {% endif %}
 

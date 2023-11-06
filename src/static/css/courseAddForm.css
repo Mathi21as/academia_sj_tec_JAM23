@@ -1,0 +1,87 @@
+.main_card {
+	width: 80%;
+	padding: 25px 50px;
+	border: solid 1px;
+	border-radius: 25px;
+	background-color: #080C1E;
+	color: #FFBF5F;
+	border-color: #FFBF5F;
+	margin: 100px auto 100px auto;
+	display: flex;
+	flex-direction: column;
+}
+
+.crear_curso_div {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+.crear_curso_div h4 {
+	margin-top: 8px;
+	margin-left: 15px;
+}
+
+.form_div {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	img {
+		margin-right: 10px;
+		border: solid 1px;
+		border-radius: 100%;
+	};
+	button {
+		padding: 10px;
+		background-color: #080C1E;
+		border: solid 1px;
+		border-color: #FFBF5F;
+		border-radius: 15px;
+		color: #FFBF5F;
+	};
+	button :hover {
+		background-color: #FFBF5F;
+	}
+}
+
+.form_fields {
+	border: solid 1px;
+	border-color: #FFBF5F;
+	border-radius: 25px;
+	padding: 10px;
+	margin-bottom: 30px;
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	input {
+		border-radius: 10px;
+	};
+	textarea {
+		width: 100%;
+		resize: none;
+	}
+}
+
+.form {
+	color: black;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	p {
+		color: #FFBF5F;
+		margin-top: 10px;
+		margin-bottom: 30px;
+	};
+	:nth-child(4) label {
+		color: #FFBF5F;
+		margin-bottom: 10px;
+	};
+	:nth-child(5) label {
+		color: #FFBF5F;
+		margin-bottom: 10px;
+	}
+}
+
+.form > {
+	width: 100%;
+}
