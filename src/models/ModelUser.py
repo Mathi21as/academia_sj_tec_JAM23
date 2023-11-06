@@ -23,6 +23,7 @@ class ModelUser():
                 user.gender))
             db.connection.commit()
             cursor.close()
+
             return True
         except Exception as ex:
             if ex.args[0] == 1062:

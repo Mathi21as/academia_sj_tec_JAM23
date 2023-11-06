@@ -8,60 +8,86 @@
 {% endblock %}
 
 {% block body %}
-<form  class="form-signin" action="/register" method="POST"> 
-    <img class="mb-4" src="{{url_for('static' , filename = 'img/TALENTO-TEC-capacitate-de-PROGRAMACION.jpg')}}" alt="" width="72" height="57">
-    {% with messages = get_flashed_messages() %}
+<div class="singupContainer text-center">
+  <div class="signupForm ">
+    <form  class="form-signin" action="/register" method="POST"> 
+      <img class="mb-4" src="../static/icons/lucide_user-circle.svg" alt="" width="300" height="">
+      {% with messages = get_flashed_messages() %}
+      {% if messages  %}
+        <br/>
+        {% for message in messages %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+            <strong>{{ message }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+      {% endif  %}
+      {% endwith %} 
 
-    {% if messages  %}
-      <br/>
-      {% for message in messages %}
-      <div class="alert alert-warning alert-dismissible" role="alert">
-          <strong>{{ message }}</strong>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <div class="inputsContainer">           
+        <input type="hidden" name="csrf_token" value="{{csrf_token}}"/> <!--  para que formulario de login tenga codigo token para csrf-->
+  
+        <div class="formInputSingup">
+          <input type="text" class="form-control" name="name" placeholder="Ingresa tu nombre ">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="text" class="form-control" name="last_name" placeholder="Ingresa tu apellido">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="text" class="form-control" name="phone" placeholder="Ingresa el número de tu celular ">
+          <p class="fieldDetails optionalFIeld">*Campo opcional </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="text" class="form-control" name="dni" placeholder="Ingresa tu DNI">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="email" class="form-control" name="email" placeholder="Ingresa tu correo electrónico ">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
+        <div class="formInputSingup">          
+          <input type="gender" class="form-control" name="gender" >
+          <p class="fieldDetails optionalFIeld">*Campo opcional </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="password" class="form-control" name="password" placeholder="Ingresa tu contraseña">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
+        <div class="formInputSingup">
+          <input type="password" class="form-control" name="password-confirm" placeholder="Confirma tu contraseña">
+          <p class="fieldDetails ">*Campo obligatorio </p>
+        </div>
       </div>
-      {% endfor %}
-    {% endif  %}
 
+      <a class="btn btn-signup" href="{{url_for('register')}}"> CREA TU CUENTA </a>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages  %}
+        {% for message in messages %}
+          <div class="mt-4">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          </div>
+        {% endfor %}
+      {% endif  %}
     {% endwith %}
-    <h1 class="h3 mb-3 fw-normal">Register</h1>
-
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}"> <!--  para que formulario de login tenga codigo token para csrf-->
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="name" placeholder="Pepe">
-      <label for="name">Nombre</label>
+    </form>
+  </div>
+  <div class="loginCover">
+    <div class="welcome">      
+      <p class="title">Bienvenido@s</p>
+      <img src="../static/img/logoJAM-welcome.png">
     </div>
-
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="last_name" placeholder="Hoguito">
-      <label for="last_name">Apellido</label>
-    </div>
-
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="phone" placeholder="264789871">
-      <label for="phone">Telefono </label>
-    </div>
-
-    <div class="form-floating mt-2">
-      <input type="text" class="form-control" name="dni" placeholder="94150874 ">
-      <label for="dni">Dni </label>
-    </div>
-    <div class="form-floating mt-2">
-      <input type="email" class="form-control" name="email" placeholder="email@gmail.com">
-      <label for="email">Email</label>
-    </div>
-    <div class="form-floating mt-2">
-      <input type="gender" class="form-control" name="gender" >
-      <label for="gender">Genero</label>
-    </div>
-    <div class="form-floating mt-2">
-      <input type="password" class="form-control" name="password" placeholder="Password">
-      <label for="password">Password</label>
-    </div>
-    <div class="form-floating mt-2">
-      <input type="password" class="form-control" name="password-confirm" placeholder="Password">
-      <label for="password-confirm">Confirm password</label>
-    </div>
-
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
-  </form>
+    <div class="newAccount">
+      <p>Si no tiene una cuenta aquí puedes regístrate </p>      
+      <div class="mt-2">      
+        <a class="btn btn-signup" href="{{url_for('login')}}"> INGRESAR </a>
+      </div>
+    </div>    
+  </div>  
+</div>
 {% endblock %}
