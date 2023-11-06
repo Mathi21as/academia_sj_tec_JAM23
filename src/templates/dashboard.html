@@ -12,11 +12,51 @@
 </nav>
 
 <div class="alert alert-success">
-    <h1>Bienvenido {{current_user.email}}</h1>
+    <h3>Bienvenido {{current_user.email}}</h1>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
 
 <a class="btn btn-secondary" href="{{url_for('logout')}}"> Cerrar sesion! </a>
+
+
+<div class="container CoursesList border border-3 rounded border-light pt-2 mt-4">    
+    <h4>Listado de cursos</b></h4>
+    {% if courseList %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Dni</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courseList %}
+                <tr>
+                    <td>{{ course[0] }}</td>
+                    <td>{{ course[4] }}</td>
+                    <td>{{ course[1] }}</td>
+                    <td>{{ course[2] }}</td>
+                    <td>{{ course[3] }}</td>
+                    <td>{{ course[5] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No hay cursos cargados</p>
+    {% endif %}
+</div>
+
+{% if current_user.role == "admin" or current_user.role == "teacher"%}
+<div class="container actionButons border border-3 rounded border-light pt-2 mt-4">
+    <a class="btn btn-primary"  href="/course" role="button">Agregar curso</a>
+
+</div>
+{% endif %}
 
 {% if current_user.role == "admin" or current_user.role == "teacher"%}
 <div class="container studentsList border border-3 rounded border-light pt-2 mt-4">    

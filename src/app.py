@@ -7,7 +7,7 @@ from utils.EmailManager import EmailManager
 from dotenv import load_dotenv
 from config import config
 from config import appConfig
-from models.ModelInscription import ModelUsers_courses
+from models.ModelInscription import ModelInscription
 from models.ModelCourse import ModelCourse
 
 from models.ModelUser import ModelUser
@@ -28,23 +28,24 @@ mail = Mail(app)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    if request.method == 'POST':
-        if request.form['password'] == request.form['password-confirm']:
-            user = User(0,
-                        request.form['name'],
-                        request.form['last_name'],
-                        request.form['phone'],
-                        request.form['dni'],
-                        request.form['email'],
-                        request.form['password']
+    if request.method == 'POST':      
+        if request.form['password'] == request.form['password-confirm']:     
+            user = User( 0 ,
+                        request.form['name'] , 
+                        request.form['last_name'] , 
+                        request.form['phone'] , 
+                        request.form['dni'] ,
+                        request.form['email'] , 
+                        request.form['password'], 
+                        request.form['gender']
                         )
             registerUser = ModelUser.register(db, user)
             if registerUser:
                 loguedUser = ModelUser.login(db, user)
                 login_user(loguedUser)
                 EmailManager.sendEmail(user.email)
-                return redirect(url_for('home'))
-            else:
+                return redirect(url_for('dashboard'))
+            else:                
                 flash("Email ya existe, intenta logueandote")
                 return render_template('auth/login.html')
         else:
@@ -55,15 +56,15 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'POST':
-        user = User(0, None, None, None, None, request.form['email'], request.form['password'])
+    if request.method == 'POST':        
+        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], None )
         loguedUser = ModelUser.login(db, user)
 
         if loguedUser != None:
 
             if loguedUser.password:
                 login_user(loguedUser)
-                return redirect(url_for('home'))
+                return redirect(url_for('dashboard'))
             else:
                 flash("Credenciales erroneas")
                 return render_template('auth/login.html')
@@ -88,41 +89,45 @@ def index():
 
 
 
-@app.route('/home')
+@app.route('/dashboard')
 @login_required
-def home():
+def dashboard():
     if current_user.role == "student":
-        return render_template('home.html')
-    elif current_user.role == "student":
+        courseList = ModelCourse.findAll(db)
+        return render_template('dashboard.html', courseList = courseList)
+    elif current_user.role == "teacher":        
+        courseList = ModelCourse.findAll(db)
         studentList = ModelUser.getAllByRoleForRender(db, "student")
-        return render_template('home.html', studentList = studentList)
+        return render_template('dashboard.html', studentList = studentList, courseList = courseList)
     else:
+        courseList = ModelCourse.findAll(db)
         studentList = ModelUser.getAllByRoleForRender(db, "student")
         teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
-        return render_template('home.html', studentList = studentList, teacherList = teacherList)
+        return render_template('dashboard.html', studentList = studentList, teacherList = teacherList, courseList = courseList)
 
 
 @app.route("/inscripcion", methods=['GET', 'POST'])
 @login_required
 def inscription():
     if(request.method == "POST"):
-        ModelUsers_courses.inscription(db, current_user, "")
+        ModelInscription.inscription(db, current_user, "")
         return
     else:
-        courseList = ModelCourse.findAll()
-        return render_template("inscripcionCurso.html", courseList = courseList)
+        courseList = ModelCourse.findAll(db)
+        return render_template("courseAddForm.html", courseList = courseList, csrf_token = csrf)
 
 def status_401(error):
      return redirect(url_for('login'))
 
 def status_404(error):
      return "<h1> Pagina no encontrada! <h1/>",404
+# ------------------ MANEJO DE ERRORES ------------------
 
-if __name__ == 'app':
+if __name__ == '__main__':
     app.config.from_object(config['development'])
     appConfig.init(app)
     csrf = CSRFProtect()  # para que formulario de login tenga codigo token para csrf
-    #csrf.init_app(app) # para que formulario de login tenga codigo token para csrf
+    # csrf.init_app(app) # para que formulario de login tenga codigo token para csrf
     mail.init_app(app)
     app.register_error_handler(401, status_401)
     app.register_error_handler(404, status_404)

@@ -8,45 +8,52 @@
 {% endblock %}
 
 {% block body %}
-<form  class="form-signin" action="/login" method="POST"> 
-    <img class="mb-4" src="{{url_for('static' , filename = 'img/python, flask, mysql.png')}}" alt="" width="300" height="">
-
-    <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
-    <input type="hidden" name="csrf_token" value="{{csrf_token}}"/> <!--  para que formulario de login tenga codigo token para csrf-->
-
-    <p>{{csrf_token}}</p>
-
-    <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com">
-      <label for="email">Email</label>
+<div class="loginContainer text-center">
+  <div class="loginForm ">
+    <form  class="form-signin" action="/login" method="POST"> 
+      <img class="mb-4" src="../static/icons/lucide_user-circle.svg" alt="" width="300" height="">
+      
+  <!-- 
+      <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+  -->
+      <input type="hidden" name="csrf_token" value="{{csrf_token}}"/> <!--  para que formulario de login tenga codigo token para csrf-->
+  
+      <div class="formInputLogin">
+        <input type="email" class="form-control" id="email" name="email" placeholder="email@gmail.com">        
+      </div>
+      <div class="formInputLogin mt-2">
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+      </div>
+  
+      <button class="btn btn-login" type="submit">INGRESAR</button>
+      {% with messages = get_flashed_messages() %}
+      {% if messages  %}
+        {% for message in messages %}
+          <div class="mt-4">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              <strong>{{ message }}</strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          </div>
+        {% endfor %}
+      {% endif  %}
+    {% endwith %}
+    </form>
+  </div>
+  <div class="loginCover">
+    <div class="welcome">      
+      <p class="title">Bienvenido@s</p>
+      <img src="../static/img/logoJAM-welcome.png">
     </div>
-    <div class="form-floating mt-2">
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-      <label for="password">Password</label>
-    </div>
 
-    <div class="checkbox mb-3">
-      <label>
-        <input type="checkbox" value="remember-me"> Remember me
-      </label>
+    <div class="newAccount">
+      <p>Si no tiene una cuenta aquí puedes regístrate </p>      
+      <div class="mt-2">      
+        <a class="btn btn-signup" href="{{url_for('register')}}"> CREA TU CUENTA </a>
+      </div>
     </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-    <div class="mt-2">      
-      <a class="btn btn-outline-primary" href="{{url_for('register')}}"> No tienes cuenta? Registrate! </a>
-    </div>
-    {% with messages = get_flashed_messages() %}
-    {% if messages  %}
-      {% for message in messages %}
-        <div class="mt-4">
-          <div class="alert alert-danger alert-dismissible" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        </div>
-      {% endfor %}
-    {% endif  %}
-  {% endwith %}
-  </form>
+  </div>
+</div>
+
 
 {% endblock %}

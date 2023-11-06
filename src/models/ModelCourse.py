@@ -1,5 +1,5 @@
 class ModelCourse():
-
+    @classmethod
     def findAll(self, db):
         try:
             cursor = db.connection.cursor()
@@ -9,7 +9,7 @@ class ModelCourse():
             return courses
         except Exception as ex:
             return str(ex)
-
+    @classmethod
     def findById(self, db, id):
         try:
             cursor = db.connection.cursor()
@@ -19,7 +19,7 @@ class ModelCourse():
             return course
         except Exception as ex:
             return str(ex)
-
+    @classmethod
     def findByName(self, db, name):
         try:
             cursor = db.connection.cursor()
@@ -29,7 +29,7 @@ class ModelCourse():
             return course
         except Exception as ex:
             return str(ex)
-
+    @classmethod
     def create(self, db, course):
         try:
             cursor = db.connection.cursor()
@@ -40,7 +40,7 @@ class ModelCourse():
             return True
         except Exception as ex:
             return str(ex)
-
+    @classmethod
     def update(self, db, course, id):
         try:
             cursor = db.connection.cursor()
@@ -50,7 +50,7 @@ class ModelCourse():
             return
         except Exception as ex:
             return str(ex)
-
+    @classmethod
     def delete(self, db, id):
         try:
             cursor = db.connection.cursor()

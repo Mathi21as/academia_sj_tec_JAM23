@@ -7,16 +7,58 @@
     <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!-- css propio -->
-    {% block customCSS %}
-
-    {% endblock %}
+    <!-- css propio principal-->
+    <link rel="stylesheet" type="text/css" href="../static/css/base.css">
+    <!-- css propio por template-->
+    {% block customCSS %}  {% endblock %}
+    
 
 </head>
-<body class="text-center">
+<body>
+    <header class="header">
+        <div >
+        </div>
+    </header>
+    <span class="goldenDivider"></span>
     
-    {% block body %}
-    {% endblock %}
+    <div  class=" ">
+        {% block body %}
+        {% endblock %}
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <span class="goldenDivider"></span>
+    <footer class="footer">
+        <div class="logo">
+            <a>
+                <img src="../static/img/logoJAM-eduProyect.png">
+            </a>
+        </div>
+        <div class="info">
+            <p class="title">Telefono</p>
+            <span class="infoItem">
+                <img src="../static/icons/phone.png">
+                <p>+54 264 464 7572</p>
+            </span>
+        </div>
+        
+        <div class="info">
+            <p class="title">Email</p>
+            <span class="infoItem">
+                <img src="../static/icons/email.png">
+                <p>Contacto: ejemplo@gmail.com</p>
+            </span>
+        </div>
+        
+        <div class="info">
+            <p class="title">Visitanos</p>
+            <span class="infoItem">
+                <img src="../static/icons/gps-dot.png">
+                <p>+54 264 464 7572</p>
+            </span>
+        </div>
+
+    </footer>
 </body>
 </html>

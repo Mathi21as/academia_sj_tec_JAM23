@@ -1,5 +1,5 @@
 CREATE SCHEMA IF NOT EXISTS `academia_jam2023`;
-
+use `academia_jam2023`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `email` varchar(100) NOT NULL,
   `password` varchar(150) NOT NULL,
   `role` varchar(7) NOT NULL,
+  `gender` varchar(50),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `dni_UNIQUE` (`dni`),
@@ -16,18 +17,20 @@ CREATE TABLE IF NOT EXISTS `user` (
 );
 
 CREATE TABLE IF NOT EXISTS `course` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `id_teacher` INT NULL DEFAULT, -- profesor que da la materia
+  `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `id_teacher` INT NOT NULL, 
   `name` VARCHAR(45) NOT NULL,
   `duration` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id`)
+  FOREIGN KEY (`id_teacher`) REFERENCES user(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `inscription` (
   id INT AUTO_INCREMENT PRIMARY KEY,
   id_user INT NOT NULL,
   id_course INT NOT NULL,
-  role VARCHAR(7)
+  role VARCHAR(7),
+  FOREIGN KEY (`id_user`) REFERENCES user(id) ON DELETE CASCADE,
+  FOREIGN KEY (`id_course`) REFERENCES course(id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `attendance` (
