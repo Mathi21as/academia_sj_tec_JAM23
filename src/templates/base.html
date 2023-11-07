@@ -19,11 +19,13 @@
         <div class="header_div">
             <div>
                 <img src="../static/img/logoJAM-eduProyect.png" width="100px"/>
-                <a href="/courses">Cursos</a>
+                {% if current_user.id != null %}
+                    <a href="/courses">Cursos</a>
+                {% endif %}
             </div>
             <div>
-                <a href="/profile" class="icon_user"><img src="../static/icons/lucide_user-circle.svg" width="40px"/></a>
                 {% if current_user.id != null %}
+                    <a href="/profile" class="icon_user"><img src="../static/icons/lucide_user-circle.svg" width="40px"/></a>
                     <a class="btn" href="{{url_for('logout')}}"> Cerrar sesion </a>
                 {% endif %}
             </div>
