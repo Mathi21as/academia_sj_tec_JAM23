@@ -26,12 +26,12 @@
 	margin-top: 20px;
 	display: flex;
 	flex-direction: column;
-	img {
+	& img {
 		margin-right: 10px;
 		border: solid 1px;
 		border-radius: 100%;
 	};
-	button {
+	& button {
 		padding: 10px;
 		background-color: var(--main-background-dark);
 		border: solid 1px;
@@ -50,10 +50,10 @@
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	input {
+	& input {
 		border-radius: 10px;
 	};
-	textarea {
+	& textarea {
 		width: 100%;
 		resize: none;
 	}
@@ -64,19 +64,23 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
-	p {
+	& p {
 		color: var(--main-orange);
 		margin-top: 10px;
 		margin-bottom: 30px;
 	};
-	:nth-child(4) label {
-		color: var(--main-orange);
-		margin-bottom: 10px;
-	};
-	:nth-child(5) label {
-		color: var(--main-orange);
-		margin-bottom: 10px;
+	& :nth-child(4) {
+		& label {
+			color: var(--main-orange);
+			margin-bottom: 10px;
+		};
 	}
+	& :nth-child(5) {
+		& label {
+			color: var(--main-orange);
+			margin-bottom: 10px;
+		};
+	};
 }
 
 .form > {

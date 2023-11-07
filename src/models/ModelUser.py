@@ -64,7 +64,11 @@ class ModelUser():
 
         except Exception as ex:
             raise Exception(ex)
-        
+
+    @classmethod
+    def update(self, db, user):
+        return
+
     @classmethod
     def getAllByRoleForRender(self , db, role):
         try:
