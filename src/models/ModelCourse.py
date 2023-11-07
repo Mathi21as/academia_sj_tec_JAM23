@@ -67,8 +67,8 @@ class ModelCourse():
     def delete(self, db, id):
         try:
             cursor = db.connection.cursor()
-            sql = "DELETE FROM course WHERE id = %i;"
-            cursor.execute(sql, id)
+            sql = "DELETE FROM course WHERE id = '{}'".format(id)
+            cursor.execute(sql)
             db.connection.commit()
             cursor.close()
             return True

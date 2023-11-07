@@ -1,0 +1,24 @@
+{% extends './base.html' %}
+
+{% block title %}Academia - Home{% endblock %}
+
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/delete.css')}}">
+{% endblock %}
+
+{% block body %}
+
+<div class="main_card">
+    <img src="{{url_for('static', filename = 'icons/delete-icon.svg')}}" width="120px" alt="delete-icon">
+    <h3>Eliminar</h3>
+    <form class="form_div" action="/delete-course" method="POST">
+        <label>Desea eliminar el curso "{{course.name}}"?</label>
+        <input type="hidden" name="id_course" value="{{course.id}}" >
+        <div>
+            <button class="btn btn-danger" type="submit">Eliminar</button>
+            <a href="/dashboard">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

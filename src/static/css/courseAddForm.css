@@ -3,10 +3,10 @@
 	padding: 25px 50px;
 	border: solid 1px;
 	border-radius: 25px;
-	background-color: #080C1E;
-	color: #FFBF5F;
-	border-color: #FFBF5F;
-	margin: 100px auto 100px auto;
+	background-color: var(--main-background-dark);
+	color: var(--main-orange);
+	border-color: var(--main-orange);
+	margin: 100px auto;
 	display: flex;
 	flex-direction: column;
 }
@@ -33,20 +33,17 @@
 	};
 	button {
 		padding: 10px;
-		background-color: #080C1E;
+		background-color: var(--main-background-dark);
 		border: solid 1px;
-		border-color: #FFBF5F;
+		border-color: var(--main-orange);
 		border-radius: 15px;
-		color: #FFBF5F;
+		color: var(--main-orange);
 	};
-	button :hover {
-		background-color: #FFBF5F;
-	}
 }
 
 .form_fields {
 	border: solid 1px;
-	border-color: #FFBF5F;
+	border-color: var(--main-orange);
 	border-radius: 25px;
 	padding: 10px;
 	margin-bottom: 30px;
@@ -68,16 +65,16 @@
 	display: flex;
 	flex-direction: column;
 	p {
-		color: #FFBF5F;
+		color: var(--main-orange);
 		margin-top: 10px;
 		margin-bottom: 30px;
 	};
 	:nth-child(4) label {
-		color: #FFBF5F;
+		color: var(--main-orange);
 		margin-bottom: 10px;
 	};
 	:nth-child(5) label {
-		color: #FFBF5F;
+		color: var(--main-orange);
 		margin-bottom: 10px;
 	}
 }

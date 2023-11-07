@@ -5,18 +5,10 @@
 
 {% block body %}
 
-<nav class="bg-danger">
-    {% if current_user.role == "student" %}
-    <a href="/inscripcion">Inscripciones</a>
-    {% endif %}
-</nav>
-
 <div class="alert alert-success">
     <h3>Bienvenido {{current_user.email}}</h3>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
-
-<a class="btn btn-secondary" href="{{url_for('logout')}}"> Cerrar sesion! </a>
 
 
 <div class="container containerTableList CoursesList">    
@@ -35,7 +27,10 @@
                 <th scope="col">Duracion</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Profesor</th>
-                <th scope="col">Acciones</th>
+                {% if current_user.role == "admin" %}
+                    <th scope="col">Acciones</th>
+                    <th scope="col"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -46,10 +41,12 @@
                     <td>{{ course[3] }}</td>
                     <td>{{ course[4] }}</td>
                     <td>{{ course[1] }}</td>
-                    <td style="width: min-content">
-                        <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
-                        <a class="btn btn-danger" href="/delete-course">eliminar</a>
-                    </td>
+                    {% if current_user.role == "admin" %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
+                            <a class="btn btn-danger" href="/delete-course/{{course[0]}}">eliminar</a>
+                        </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
@@ -75,6 +72,7 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -86,6 +84,10 @@
                     <td>{{ student[2] }}</td>
                     <td>{{ student[3] }}</td>
                     <td>{{ student[5] }}</td>
+                    <td>
+                        <a class="btn btn-success" href="/edit-student/{{student[0]}}">editar</a>
+                        <a class="btn btn-danger" href="/delete-student/{{student[0]}}">eliminar</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

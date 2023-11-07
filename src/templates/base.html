@@ -16,7 +16,17 @@
 </head>
 <body>
     <header class="header">
-        <div >
+        <div class="header_div">
+            <div>
+                <img src="../static/img/logoJAM-eduProyect.png" width="100px"/>
+                <a href="/courses">Cursos</a>
+            </div>
+            <div>
+                <a href="/profile" class="icon_user"><img src="../static/icons/lucide_user-circle.svg" width="40px"/></a>
+                {% if current_user.id != null %}
+                    <a class="btn" href="{{url_for('logout')}}"> Cerrar sesion </a>
+                {% endif %}
+            </div>
         </div>
     </header>
     <span class="goldenDivider"></span>

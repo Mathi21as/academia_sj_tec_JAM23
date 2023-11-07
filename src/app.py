@@ -131,13 +131,12 @@ def addCourse():
         return redirect(url_for('dashboard'))
     else:
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
-        return render_template("courseAddForm.html", csrf_token = csrf, teachers = teachers)
+        return render_template("courseForm.html", csrf_token = csrf, teachers = teachers)
 
 @app.route("/edit-course/<id>", methods=['GET', 'POST'])
 @login_required
 def editCourse(id):
-    if(request.method == "POST"):
-        print("en post de edit course: " + request.form['course_teacher'])
+    if(request.method == "POST" and current_user.role == "admin"):
         course = Course(
             None,
             request.form['course_teacher'],
@@ -146,10 +145,33 @@ def editCourse(id):
             request.form['course_description'])
         ModelCourse.update(db, course, id)
         return redirect(url_for('dashboard'))
-    else:
+    elif(current_user.role == "admin"):
         course = ModelCourse.findById(db, id)
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
-        return render_template("courseAddForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
+        return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
+    else:
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
+@app.route("/delete-course/<id>", methods=['GET'])
+@login_required
+def deleteCourse(id):
+    if(current_user.role == "admin"):
+        course = ModelCourse.findById(db, id)
+        return render_template("delete.html", csrf_token = csrf, course = course)
+    else:
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
+@app.route("/delete-course", methods=['POST'])
+@login_required
+def deleteCoursePost():
+    idCourse = request.form['id_course']
+    if (not idCourse.isnumeric()):
+        return render_template("error.html", message="Url no valida.")
+    if (current_user.role == "admin"):
+        ModelCourse.delete(db, idCourse)
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
 def status_401(error):
      return redirect(url_for('login'))
