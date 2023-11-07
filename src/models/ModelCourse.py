@@ -44,6 +44,7 @@ class ModelCourse():
     @classmethod
     def create(self, db, course):
         try:
+            print(course.id_teacher)
             cursor = db.connection.cursor()
             sql = "INSERT INTO course (id_teacher, name, duration, description) VALUES(%s, %s, %s, %s);"
             cursor.execute(sql, (course.id_teacher, course.name, course.duration, course.description))
