@@ -80,6 +80,32 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
+    if request.method == 'GET': 
+        return render_template('userProfile.html')
+    elif request.method == 'POST':
+        user = User( 0 ,
+            request.form['name'] , 
+            request.form['last_name'] , 
+            request.form['phone'] , 
+            None ,
+            request.form['email'] , 
+            None ,
+            request.form['gender'] ,
+            None 
+            )
+        updatedUser = ModelUser.udpateProfile(db, user)
+        if updatedUser:
+            flash("Actualizacion correcta!")
+            # login_user(updatedUser)
+            # return render_template('dashboard.html')
+            return redirect(url_for('dashboard'))
+        else:
+            flash("¡ Error de actualizacion !")
+            return render_template('userProfile.html')
+
 @login_manager_app.user_loader
 def load_user(id):
     return ModelUser.get_by_id(db , id)
