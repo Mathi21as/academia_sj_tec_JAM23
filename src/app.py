@@ -152,7 +152,7 @@ def editUser(id):
         updatedUser = ModelUser.updateByAdmin(db, user)      
         if updatedUser:
             flash("Actualizacion de usuario correcta", "success")
-        return render_template("dashboard.html", csrf_token = csrf, user = user)
+        return redirect(url_for('dashboard'))
     elif(current_user.role == "admin"):
         user = ModelUser.get_by_id(db, id)        
         return render_template("editUsers.html", csrf_token = csrf, user = user)
