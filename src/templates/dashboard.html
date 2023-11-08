@@ -5,7 +5,7 @@
 
 {% block body %}
 
-<div class="alert alert-success">
+<div class="d-flex flex-column gap-2 text-center mt-5">
     <h3>Bienvenido {{current_user.email}}</h3>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
@@ -36,15 +36,15 @@
         <tbody>
             {% for course in courseList %}
                 <tr>
-                    <td>{{ course[0] }}</td>
-                    <td>{{ course[2] }}</td>
-                    <td>{{ course[3] }}</td>
-                    <td>{{ course[4] }}</td>
-                    <td>{{ course[1] }}</td>
+                    <td>{{ course.id }}</td>
+                    <td>{{ course.name }}</td>
+                    <td>{{ course.duration }}</td>
+                    <td>{{ course.description }}</td>
+                    <td>{{ course.id_teacher[1] }} {{ course.id_teacher[2] }}</td>
                     {% if current_user.role == "admin" %}
                         <td style="width: min-content" colspan="2">
-                            <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
-                            <a class="btn btn-danger" href="/delete-course/{{course[0]}}">eliminar</a>
+                            <a class="btn btn-success" href="/edit-course/{{course.id}}">editar</a>
+                            <a class="btn btn-danger" href="/delete-course/{{course.id}}">eliminar</a>
                         </td>
                     {% endif %}
                 </tr>

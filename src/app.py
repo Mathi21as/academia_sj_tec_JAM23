@@ -102,6 +102,7 @@ def dashboard():
         return render_template('dashboard.html', studentList = studentList, courseList = courseList)
     else:
         courseList = ModelCourse.findAll(db)
+        print(courseList)
         studentList = ModelUser.getAllByRoleForRender(db, "student")
         teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template('dashboard.html', studentList = studentList, teacherList = teacherList, courseList = courseList)
@@ -167,11 +168,15 @@ def deleteCoursePost():
     idCourse = request.form['id_course']
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    if (current_user.role == "admin"):
+    elif (current_user.role == "admin"):
         ModelCourse.delete(db, idCourse)
         return redirect(url_for('dashboard'))
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
+@app.route("/edit-user/<id>", methods=['GET'])
+def editUser(id):
+    return
 
 def status_401(error):
      return redirect(url_for('login'))

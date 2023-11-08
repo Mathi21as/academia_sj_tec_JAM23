@@ -9,8 +9,17 @@ class ModelCourse():
             sql = "SELECT * FROM course;"
             cursor.execute(sql)
             courses = cursor.fetchall()
+            sql = "SELECT * FROM user WHERE role = 'teacher';"
+            cursor.execute(sql)
+            teachers = cursor.fetchall()
             cursor.close()
-            return courses
+            coursesList = []
+            for course in courses:
+                for teacher in teachers:
+                    if(course[1] == teacher[0]):
+                        c = Course(course[0], teacher, course[2], course[3], course[4])
+                        coursesList.append(c)
+            return coursesList
         except Exception as ex:
             return str(ex)
     @classmethod
