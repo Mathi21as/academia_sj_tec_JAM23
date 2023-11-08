@@ -1,0 +1,90 @@
+.userProfile{
+
+}
+.userProfile>span{
+    display: flex;
+    align-items: center;
+}
+.userProfile>span>p{
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    line-height: 30px;
+    margin-bottom: 0;
+}
+
+.userProfileContainer{
+    display: flex;
+    justify-content:flex-start;
+    gap: 40px;
+    padding: 20px;
+}
+
+.profileImgContainer{
+    border: 3px solid var(--main-orange);
+    border-radius: 50%;
+    width: 145px;
+    height: 145px;
+}
+.profileImgContainer img{
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
+    
+}
+.userProfileContainer .infoProfileContainer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+
+}
+.userProfileContainer .infoProfileContainer>div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.userProfileContainer .infoProfileContainer p{    
+    font-size: 14px;
+  font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    margin-bottom: 0;
+}
+
+.userProfileContainer .infoProfileContainer p.infoItemProfile{    
+    font-size: 32px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    margin-top: -12px;
+}
+
+.form-updateProfile .inputsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+.form-updateProfile>h5{    
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+}
+.form-updateProfile input , .form-updateProfile input::placeholder {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    color: black;
+}
+.form-updateProfile .inputsContainer .formInputUpdateProfile{
+    width: 48%;
+
+}
+.form-updateProfile .btn-updateProfile{
+	border-color: var(--main-orange);
+	color: var(--main-orange);
+	border-radius: 15px;
+	padding: 16px 23px;
+	font-size: 20px;
+    margin-top: 100px;
+
+}

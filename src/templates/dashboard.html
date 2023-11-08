@@ -10,7 +10,6 @@
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
 
-
 <div class="container containerTableList CoursesList">    
     <h4>Listado de cursos</b></h4>
     {% if current_user.role == "admin" or current_user.role == "teacher"%}

@@ -22,11 +22,16 @@ body {
 	padding: 20px 80px;
 	justify-content: space-between;
 	& a {
+        display: flex;
+    
 		font-size: 25px;
 		margin: 0px 30px;
 		text-decoration: none;
 		color: var(--main-orange);
-		align-self: center;
+		align-items: center;
+        & p {
+            margin: 0;
+        }
 	};
 	& div {
 		display: flex;
@@ -34,6 +39,10 @@ body {
 	}
 }
 
+.header_div div {
+    display: flex;
+    flex-direction: row;
+}
 .icon_user img {
 		width: 60px;
 }

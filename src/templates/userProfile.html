@@ -1,0 +1,95 @@
+{% extends './base.html' %}
+
+{% block title %}Academia - Perfil{% endblock %}
+
+
+{% block body %}
+
+<!-- css propio -->
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/userProfile.css')}}">
+{% endblock %}
+
+
+<div class="container containerTableList userProfile">
+    <span>        
+        <a class="" href="/dashboard" role="button"><img src="../static/icons/arrow-left-circle.svg"></a>
+        <p>Perfil de usuario</p>        
+    </span>
+    <div>
+        <div class="container containerTableList userProfileContainer">
+            <div class="profileImgContainer">
+                <img src="../static/img/logoJAM-welcome.png">
+                <button> Btn cambiar foto</button>
+            </div>
+            <div class="infoProfileContainer">
+                <div>
+                    <div>
+                        <p>Nombre</p>
+                        <p class="infoItemProfile">{{current_user.name}}</p>
+                    </div>
+                    <div>
+                        <p>Apellido</p>
+                        <p class="infoItemProfile">{{current_user.last_name}}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p>Dni</p>
+                        <p class="infoItemProfile">{{current_user.dni}}</p>
+                    </div>
+                    <div>
+                        <p>Telefono</p>
+                        <p class="infoItemProfile">{{current_user.phone}}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p>Email</p>
+                        <p class="infoItemProfile">{{current_user.email}}</p>
+                    </div>
+                    <div>
+                        <p>Rol</p>
+                        <p class="infoItemProfile">{{current_user.role}}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <p>Genero</p>
+                        <p class="infoItemProfile">{{current_user.gender}}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <form  class="form-updateProfile" action="/profile" method="POST">        
+            <h5>Datos editables de tu perfil </h5>   
+            <div class="inputsContainer">           
+              <input type="hidden" name="csrf_token" value="{{csrf_token}}"/> <!--  para que formulario de login tenga codigo token para csrf-->
+              <input type="hidden" name="email" value="{{current_user.email}}"/> <!--  para poder tener la direccion email para actualizar -->
+              <div class="formInputUpdateProfile">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="name" value={{current_user.name}}>
+              </div>
+              <div class="formInputUpdateProfile">
+                <label for="last_name" class="form-label">Apellido</label>
+                <input type="text" class="form-control" name="last_name" value={{current_user.last_name}}>
+              </div>
+              <div class="formInputUpdateProfile">
+                <p class="phone">Telefono</p>
+                <input type="text" class="form-control" name="phone" value={{current_user.phone}}>
+              </div>
+              <div class="formInputUpdateProfile">          
+                <label for="gender" class="form-label">Genero</label>
+                <input type="gender" class="form-control" name="gender" value={{current_user.gender}}>
+              </div>
+            </div>
+            <button class="btn btn-updateProfile" type="submit">GUARDAR (funcionamiento pendiente)</button>
+        </form>
+    </div>
+</div>
+
+
+
+{% endblock %}
