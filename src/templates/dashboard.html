@@ -9,7 +9,18 @@
     <h3>Bienvenido {{current_user.email}}</h3>
     <h4>Tu rol actual es <b>{{current_user.role}}</b></h4>
 </div>
-
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages  %}
+  {% for category , message in messages %}
+    <div class="mt-4">
+      <div class="alert alert-{{category}} alert-dismissible" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    </div>
+  {% endfor %}
+{% endif  %}
+{% endwith %}
 <div class="container containerTableList CoursesList">    
     <h4>Listado de cursos</b></h4>
     {% if current_user.role == "admin" or current_user.role == "teacher"%}
@@ -110,6 +121,10 @@
                 <th scope="col">Apellido</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Email</th>
+                {% if current_user.role == "admin" %}
+                <th scope="col">Acciones</th>
+                <th scope="col"></th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
@@ -121,6 +136,12 @@
                     <td>{{ teacher[2] }}</td>
                     <td>{{ teacher[3] }}</td>
                     <td>{{ teacher[5] }}</td>
+                    {% if current_user.role == "admin" %}
+                    <td style="width: min-content" colspan="2">
+                        <a class="btn btn-success" href="/edit-teacher/{{teacher[0]}}">editar</a>
+                        <a class="btn btn-danger" href="/delete-teacher/{{teacher[0]}}">eliminar</a>
+                    </td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

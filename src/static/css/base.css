@@ -162,3 +162,24 @@ body {
     padding-right: 20px;
     border: none;
 }
+
+/* ALERTS COMUNES  */
+
+.alert-success{    
+    background-color: #b5d7c8;
+    color: green;
+    width: 40%;
+    margin-left: auto;
+}
+.alert-error{
+    background-color: #d7b5b5;
+    color: red;
+    width: 40%;
+    margin-left: auto;   
+}
+.loginForm .alert-success , .signupForm .alert-success{    
+    margin: auto;
+}
+.loginForm .alert-error , .signupForm .alert-error{
+    margin: auto;   
+}

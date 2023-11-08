@@ -22,18 +22,18 @@
       </div>
   
       <button class="btn btn-login" type="submit">INGRESAR</button>
-      {% with messages = get_flashed_messages() %}
+      {% with messages = get_flashed_messages(with_categories=True) %}
       {% if messages  %}
-        {% for message in messages %}
+        {% for category , message in messages %}
           <div class="mt-4">
-            <div class="alert alert-danger alert-dismissible" role="alert">
+            <div class="alert alert-{{category}} alert-dismissible" role="alert">
               <strong>{{ message }}</strong>
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
           </div>
           </div>
         {% endfor %}
       {% endif  %}
-    {% endwith %}
+      {% endwith %}
     </form>
   </div>
   <div class="loginCover">

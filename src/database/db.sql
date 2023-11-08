@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   `id_teacher` INT NOT NULL, 
   `name` VARCHAR(45) NOT NULL,
   `duration` VARCHAR(45) NOT NULL,
-  description TEXT NOT NULL,
+  `description` VARCHAR(150) NOT NULL,
   FOREIGN KEY (`id_teacher`) REFERENCES user(id) ON DELETE CASCADE
 );
 

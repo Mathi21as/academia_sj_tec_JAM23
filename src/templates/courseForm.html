@@ -90,7 +90,13 @@
             </div>
         </div>
         </div>
-        <button class="w-100" type="submit">Crear curso</button>
+        <button class="w-100" type="submit">
+        {% if mode == "edit" %}
+        Editar curso
+        {% else %}
+        Crear curso
+        {% endif %}
+        </button>
       </form>
     </div>
 </div>

@@ -47,10 +47,10 @@ def register():
                 EmailManager.sendEmail(user.email)
                 return redirect(url_for('dashboard'))
             else:                
-                flash("Email ya existe, intenta logueandote")
+                flash("Email ya existe, intenta logueandote", "error")
                 return render_template('auth/login.html')
         else:
-            flash("Passwords no coinciden!")
+            flash("Passwords no coinciden!", "error")
             return render_template('auth/register.html')
     else:
         return render_template('auth/register.html', csrf_token=csrf)
@@ -62,7 +62,6 @@ def login():
         loguedUser = ModelUser.login(db, user)
 
         if loguedUser != None:
-
             if loguedUser.password:
                 login_user(loguedUser)
                 return redirect(url_for('dashboard'))
@@ -70,7 +69,7 @@ def login():
                 flash("Credenciales erroneas")
                 return render_template('auth/login.html')
         else:
-            flash("Credenciales erroneas")
+            flash("Credenciales erroneas", "error")
             return render_template('auth/login.html')
     else:
         return render_template('auth/login.html', csrf_token=csrf)
@@ -98,13 +97,11 @@ def profile():
             )
         updatedUser = ModelUser.udpateProfile(db, user)
         if updatedUser:
-            flash("Actualizacion correcta!")
-            # login_user(updatedUser)
-            # return render_template('dashboard.html')
+            flash("Actualizacion correcta!", "success")
             return redirect(url_for('dashboard'))
         else:
-            flash("¡ Error de actualizacion !")
-            return render_template('userProfile.html')
+            flash("¡ Error de actualizacion !", "error")
+            return redirect(url_for('userProfile'))
 
 @login_manager_app.user_loader
 def load_user(id):
