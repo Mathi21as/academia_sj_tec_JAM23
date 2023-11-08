@@ -144,7 +144,7 @@ def inscription():
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
 def addCourse():
-    if(request.method == "POST"):
+    if(request.method == "POST" and current_user.role == "admin"):
         course = Course(
             None,
             request.form['course_teacher'],
@@ -160,6 +160,8 @@ def addCourse():
 @app.route("/edit-course/<id>", methods=['GET', 'POST'])
 @login_required
 def editCourse(id):
+    if (not id.isnumeric()):
+        return render_template("error.html", message="Url no valida.")
     if(request.method == "POST" and current_user.role == "admin"):
         course = Course(
             None,
@@ -179,6 +181,8 @@ def editCourse(id):
 @app.route("/delete-course/<id>", methods=['GET'])
 @login_required
 def deleteCourse(id):
+    if (not id.isnumeric()):
+        return render_template("error.html", message="Url no valida.")
     if(current_user.role == "admin"):
         course = ModelCourse.findById(db, id)
         return render_template("delete.html", csrf_token = csrf, course = course)
@@ -197,15 +201,11 @@ def deleteCoursePost():
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
-@app.route("/edit-user/<id>", methods=['GET'])
-def editUser(id):
-    return
-
 def status_401(error):
      return redirect(url_for('login'))
 
 def status_404(error):
-     return "<h1> Pagina no encontrada! <h1/>",404
+     return render_template("error.html", message = "ERROR 404 - Pagina no encontrada"),404
 # ------------------ MANEJO DE ERRORES ------------------
 
 if __name__ == '__main__':
