@@ -10,15 +10,15 @@
 	flex-basis: min-content;
 	text-align: center;
 	object-position: center;
-	img {
+	& img {
 		align-self: center;
 		margin-bottom: 20px;
 	};
-	h3 {
+	& h3 {
 		font-size: 40px;
 		font-weight: 600;
 	};
-	p {
+	& p {
 		font-size: 22px;
 	}
 }
@@ -32,30 +32,36 @@
 	flex-direction: column;
 	width: max-content;
 	align-self: center;
-	div {
+	& div {
 		display: flex;
 		flex-direction: row;
 		gap: 15px;
 		margin-top: 30px
 	};
-	label {
+	& label {
 		font-size: 22px;
 	}
-	div button {
-		flex-basis: 50%;
-		border-radius: 10px;
+	& div {
+		& button {
+			flex-basis: 50%;
+			border-radius: 10px;
+		};
 	};
-	div a {
-		padding: 5px 0px;
-		flex-basis: 50%;
-		border: solid 1px;
-		border-radius: 10px;
-		text-decoration: none;	
-		border-color: var(--main-orange);
-		color: var(--main-orange);
+	& div {
+		& a {
+			padding: 5px 0px;
+			flex-basis: 50%;
+			border: solid 1px;
+			border-radius: 10px;
+			text-decoration: none;	
+			border-color: var(--main-orange);
+			color: var(--main-orange);
+		}
 	};
-	div a:hover {
+	& div {
+		& a:hover {
 		cursor: pointer;
 		border-style: inset;
+		};
 	}
 }

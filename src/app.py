@@ -149,10 +149,10 @@ def addCourse():
     if(request.method == "POST"):
         course = Course(
             None,
+            request.form['course_teacher'],
             request.form['course_name'],
-            request.form['course_description'],
             request.form['course_duration'],
-            request.form['course_teacher'])
+            request.form['course_description'])
         ModelCourse.create(db, course)
         return redirect(url_for('dashboard'))
     else:

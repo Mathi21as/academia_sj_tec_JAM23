@@ -21,19 +21,22 @@ body {
 	flex-direction: row;
 	padding: 20px 80px;
 	justify-content: space-between;
-
-}
-.header_div a {
-    display: flex;
-    align-items: center;
-    font-size: 25px;
-    margin: 0px 30px;
-    text-decoration: none;
-    color: var(--main-orange);
-    align-self: center;
-}
-.header_div a p{
-    margin: 0;
+	& a {
+        display: flex;
+    
+		font-size: 25px;
+		margin: 0px 30px;
+		text-decoration: none;
+		color: var(--main-orange);
+		align-items: center;
+        & p {
+            margin: 0;
+        }
+	};
+	& div {
+		display: flex;
+		flex-direction: row;
+	}
 }
 
 .header_div div {
