@@ -82,21 +82,33 @@ class ModelUser():
         except Exception as ex:
             raise Exception(ex)
 
+#
+#    @classmethod
+#    def update(self, db, user):
+#        try:
+#            cursor = db.connection.cursor()
+#            sql = """UPDATE user SET name = '{}', last_name = '{}',phone = '{}', dni = '{}', email = '{}',
+#                password = '{}', role = '{}'  WHERE email = '{}'""".format(user.name, user.last_name, user.phone, user.dni,
+#                                                       user.email, user.password, user.role, user.email)
+#            cursor.execute(sql)
+#            db.connection.commit()
+#            cursor.close()
+#            return True
+#
+#        except Exception as ex:
+#            raise Exception(ex)
     @classmethod
-    def update(self, db, user):
+    def updateByAdmin(self, db, user):
         try:
             cursor = db.connection.cursor()
-            sql = """UPDATE user SET name = '{}', last_name = '{}',phone = '{}', dni = '{}', email = '{}',
-                password = '{}', role = '{}'""".format(user.name, user.last_name, user.phone, user.dni,
-                                                       user.email, user.password, user.role)
+            sql = "UPDATE user SET name = '{}', last_name = '{}', phone = '{}', role = '{}'  WHERE id = '{}'".format(user.name, user.last_name, user.phone, user.role, user.id)
             cursor.execute(sql)
             db.connection.commit()
             cursor.close()
             return True
-
         except Exception as ex:
             raise Exception(ex)
-            return False
+
 
     @classmethod
     def getAllByRoleForRender(self , db, role):

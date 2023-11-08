@@ -27,6 +27,15 @@ mail = Mail(app)
 
 # app.register_blueprint(authRouter)
 
+
+
+
+# -------------- USUARIOS SESSIONES --------------- -------------- USUARIOS SESSIONES ----------------------------------------- -------------- USUARIOS SESSIONES -------------- 
+# -------------- USUARIOS SESSIONES --------------- -------------- USUARIOS SESSIONES ----------------------------------------- -------------- USUARIOS SESSIONES -------------- 
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':      
@@ -103,16 +112,6 @@ def profile():
             flash("¡ Error de actualizacion !", "error")
             return redirect(url_for('userProfile'))
 
-@login_manager_app.user_loader
-def load_user(id):
-    return ModelUser.get_by_id(db , id)
-
-@app.route('/')
-def index():
-    return redirect(url_for('login'))
-
-
-
 @app.route('/dashboard')
 @login_required
 def dashboard():
@@ -130,16 +129,40 @@ def dashboard():
         teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template('dashboard.html', studentList = studentList, teacherList = teacherList, courseList = courseList)
 
+@login_manager_app.user_loader
+def load_user(id):
+    return ModelUser.get_by_id(db , id)
 
-@app.route("/inscripcion", methods=['GET', 'POST'])
+
+@app.route("/edit-user/<id>", methods=['GET', 'POST'])
 @login_required
-def inscription():
-    if(request.method == "POST"):
-        ModelInscription.inscription(db, current_user, "")
-        return
+def editUser(id):
+    if(request.method == "POST" and current_user.role == "admin"):
+        user = User(
+           id,
+           request.form['name'],
+           request.form['last_name'],
+           request.form['phone'],
+           None,
+           None,
+           None,
+           None,
+           request.form['role'])
+        
+        updatedUser = ModelUser.updateByAdmin(db, user)      
+        if updatedUser:
+            flash("Actualizacion de usuario correcta", "success")
+        return render_template("dashboard.html", csrf_token = csrf, user = user)
+    elif(current_user.role == "admin"):
+        user = ModelUser.get_by_id(db, id)        
+        return render_template("editUsers.html", csrf_token = csrf, user = user)
     else:
-        courseList = ModelCourse.findAll(db)
-        return render_template("inscripcionCurso.html", courseList = courseList, csrf_token = csrf)
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
+# -------------- USUARIOS SESSIONES --------------- -------------- USUARIOS SESSIONES ----------------------------------------- -------------- USUARIOS SESSIONES -------------- 
+
+# -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- -------------- CURSOS --------------
+# -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- -------------- CURSOS --------------
 
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
@@ -201,6 +224,39 @@ def deleteCoursePost():
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
+# -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- 
+
+
+
+
+# -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
+# -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
+@app.route("/inscripcion", methods=['GET', 'POST'])
+@login_required
+def inscription():
+    if(request.method == "POST"):
+        ModelInscription.inscription(db, current_user, "")
+        return
+    else:
+        courseList = ModelCourse.findAll(db)
+        return render_template("inscripcionCurso.html", courseList = courseList, csrf_token = csrf)    
+
+# -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
+
+
+
+
+# -------------- PROFESORES --------------- -------------- PROFESORES ----------------------------------------- -------------- PROFESORES -------------- 
+# -------------- PROFESORES --------------- -------------- PROFESORES ----------------------------------------- -------------- PROFESORES -------------- 
+
+
+# -------------- PROFESORES --------------- -------------- PROFESORES ----------------------------------------- -------------- PROFESORES -------------- 
+
+
+
+
+# -------------- MANEJO DE ERRORES --------------- -------------- MANEJO DE ERRORES ----------------------------------------- -------------- MANEJO DE ERRORES -------------- 
+# -------------- MANEJO DE ERRORES --------------- -------------- MANEJO DE ERRORES ----------------------------------------- -------------- MANEJO DE ERRORES --------------
 def status_401(error):
      return redirect(url_for('login'))
 
