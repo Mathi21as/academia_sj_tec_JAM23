@@ -35,15 +35,15 @@
         <tbody>
             {% for course in courseList %}
                 <tr>
-                    <td>{{ course.id }}</td>
-                    <td>{{ course.name }}</td>
-                    <td>{{ course.duration }}</td>
-                    <td>{{ course.description }}</td>
-                    <td>{{ course.id_teacher[1] }} {{ course.id_teacher[2] }}</td>
+                    <td>{{ course[0] }}</td>
+                    <td>{{ course[1] }}</td>
+                    <td>{{ course[2] }}</td>
+                    <td>{{ course[3] }}</td>
+                    <td>{{ course[4] }} {{ course[5] }}</td>
                     {% if current_user.role == "admin" %}
                         <td style="width: min-content" colspan="2">
-                            <a class="btn btn-success" href="/edit-course/{{course.id}}">editar</a>
-                            <a class="btn btn-danger" href="/delete-course/{{course.id}}">eliminar</a>
+                            <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
+                            <a class="btn btn-danger" href="/delete-course/{{course[0]}}">eliminar</a>
                         </td>
                     {% endif %}
                 </tr>

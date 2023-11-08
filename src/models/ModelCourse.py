@@ -6,20 +6,10 @@ class ModelCourse():
     def findAll(self, db):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT * FROM course;"
+            sql = "SELECT c.id, c.name, c.duration, c.description, u.name, u.last_name FROM course c, user u WHERE u.id = c.id_teacher;"
             cursor.execute(sql)
             courses = cursor.fetchall()
-            sql = "SELECT * FROM user WHERE role = 'teacher';"
-            cursor.execute(sql)
-            teachers = cursor.fetchall()
-            cursor.close()
-            coursesList = []
-            for course in courses:
-                for teacher in teachers:
-                    if(course[1] == teacher[0]):
-                        c = Course(course[0], teacher, course[2], course[3], course[4])
-                        coursesList.append(c)
-            return coursesList
+            return courses
         except Exception as ex:
             return str(ex)
     @classmethod
