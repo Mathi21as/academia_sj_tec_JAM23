@@ -1,0 +1,67 @@
+.main_card {
+	width: 80%;
+	padding: 25px 50px;
+	background-color: var(--main-background-dark);
+	color: var(--main-orange);
+	border-color: var(--main-orange);
+	margin: 100px auto;
+	display: flex;
+	flex-direction: column;
+	flex-basis: min-content;
+	text-align: center;
+	object-position: center;
+	& img {
+		align-self: center;
+		margin-bottom: 20px;
+	};
+	& h3 {
+		font-size: 40px;
+		font-weight: 600;
+	};
+	& p {
+		font-size: 22px;
+	}
+}
+
+.main_card > {
+	width: fit-content;
+}
+
+.form_div {
+	display: flex;
+	flex-direction: column;
+	width: max-content;
+	align-self: center;
+	& div {
+		display: flex;
+		flex-direction: row;
+		gap: 15px;
+		margin-top: 30px
+	};
+	& label {
+		font-size: 22px;
+	}
+	& div {
+		& button {
+			flex-basis: 50%;
+			border-radius: 10px;
+		};
+	};
+	& div {
+		& a {
+			padding: 5px 0px;
+			flex-basis: 50%;
+			border: solid 1px;
+			border-radius: 10px;
+			text-decoration: none;	
+			border-color: var(--main-orange);
+			color: var(--main-orange);
+		}
+	};
+	& div {
+		& a:hover {
+		cursor: pointer;
+		border-style: inset;
+		};
+	}
+}

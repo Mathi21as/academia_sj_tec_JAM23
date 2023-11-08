@@ -42,24 +42,20 @@ class ModelUser():
             return True
         except Exception as ex:
             print(str(ex))
-            print(str(ex))
-            print(str(ex))
-            print(str(ex))
             return False
-
 
     @classmethod
     def login(self , db, user):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT id, name, last_name, phone, dni, email, password, gender, role FROM user 
+            sql = """SELECT id, name, last_name, phone, dni, email, password, gender, block, role   FROM user 
                         WHERE email = '{}'""".format(user.email)
             cursor.execute(sql)
             row = cursor.fetchone()
             cursor.close()
             if row != None:
                 validPassword = User.check_password(row[6] , user.password)
-                return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8])
+                return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8], row[9])
             else:
                 return None
         except Exception as ex:
@@ -69,18 +65,37 @@ class ModelUser():
     def get_by_id(self , db, id):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT id, name, last_name, phone, dni, email,gender, role  FROM user 
+            sql = """SELECT id, name, last_name, phone, dni, email,gender, block, role  FROM user 
                         WHERE id = '{}'""".format(id)
             cursor.execute(sql)
             row = cursor.fetchone()
             cursor.close()
             if row != None:
-                return User(row[0], row[1], row[2], row[3], row[4], row[5] , None, row[6], row[7])
+                return User(row[0], row[1], row[2], row[3], row[4], row[5] , None, row[6], row[7], row[8])
             else:
                 return None
-
         except Exception as ex:
             raise Exception(ex)
+
+    
+    @classmethod
+    def modifyBlockUser( self , db, id) :
+        try:            
+            cursor = db.connection.cursor()
+            sql = """SELECT block  FROM user 
+                        WHERE id = '{}'""".format(id)
+            cursor.execute(sql)
+            blockState = cursor.fetchone()[0]
+            state = 0 if blockState == 1 else 1
+            sql2 = "UPDATE user SET `block` = '{}' WHERE id = '{}'".format(state,id)
+            cursor.execute(sql2)
+            db.connection.commit()
+            cursor.close()
+            return True
+        except Exception as ex:
+            print(str(ex))
+            return False
+
 
 #
 #    @classmethod
@@ -115,13 +130,13 @@ class ModelUser():
         try:
             userList = []
             cursor = db.connection.cursor()
-            sql = """SELECT id, name, last_name, phone, dni, email, gender FROM user 
+            sql = """SELECT id, name, last_name, phone, dni, email, block, gender  FROM user 
                         WHERE role = '{}'""".format(role)
             cursor.execute(sql)
             rows = cursor.fetchall()
             cursor.close()
             for row in rows:
-                userData =[row[0], row[1], row[2], row[3], row[4], row[5], row[6]]
+                userData =[row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7]]
                 userList.append(userData)
             return userList
         

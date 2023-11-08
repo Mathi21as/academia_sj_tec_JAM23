@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(150) NOT NULL,
   `role` varchar(7) NOT NULL,
   `gender` varchar(50),
+  `block` TINYINT(1) DEFAULT 0 ,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `dni_UNIQUE` (`dni`),
@@ -38,6 +39,6 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   id INT AUTO_INCREMENT PRIMARY KEY,
   id_inscription INT NOT NULL,
   `date` DATE NOT NULL,
-  present BOOLEAN NOT NULL,
+  present TINYINT(1) DEFAULT 0 ,
   FOREIGN KEY (id) REFERENCES inscription(id) ON DELETE CASCADE
 );

@@ -159,6 +159,28 @@ def editUser(id):
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
+@app.route("/block-user/<id>", methods=['GET', 'POST'])
+@login_required
+def blockUser(id):
+    if (not id.isnumeric()):
+        return render_template("error.html", message="Url no valida.")
+    if(current_user.role == "admin"):
+        if request.method == "GET":
+            user = ModelUser.get_by_id(db, id)
+            return render_template("blockUser.html", csrf_token = csrf, user = user)
+        elif request.method == "POST":
+            blockedUser = ModelUser.modifyBlockUser(db, id)
+            if blockedUser:
+                flash("Estado de usuario cambiado!", "success")
+                return redirect(url_for('dashboard'))
+            else:
+                user = ModelUser.get_by_id(db, id)
+                flash("Error modificando usuario", "error")
+                return render_template("blockUser.html", csrf_token = csrf, user = user)
+            
+    else:
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
 # -------------- USUARIOS SESSIONES --------------- -------------- USUARIOS SESSIONES ----------------------------------------- -------------- USUARIOS SESSIONES -------------- 
 
 # -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- -------------- CURSOS --------------

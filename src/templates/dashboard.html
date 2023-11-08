@@ -94,10 +94,18 @@
                     <td>{{ student[2] }}</td>
                     <td>{{ student[3] }}</td>
                     <td>{{ student[5] }}</td>
-                    <td>
-                        <a class="btn btn-success" href="/edit-user/{{student[0]}}">editar</a>
-                        <a class="btn btn-danger" href="/delete-user/{{student[0]}}">eliminar</a>
-                    </td>
+                    {% if current_user.role == "admin" %}
+                        {% if student[6] == 1 %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
+                        </td>
+                        {% else %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-success" href="/edit-user/{{student[0]}}">Editar</a>
+                            <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
+                        </td>                            
+                        {% endif %}
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>
@@ -123,8 +131,8 @@
                 <th scope="col">Email</th>
                 {% if current_user.role == "admin" %}
                 <th scope="col">Acciones</th>
-                <th scope="col"></th>
                 {% endif %}
+                
             </tr>
         </thead>
         <tbody>
@@ -137,10 +145,16 @@
                     <td>{{ teacher[3] }}</td>
                     <td>{{ teacher[5] }}</td>
                     {% if current_user.role == "admin" %}
-                    <td style="width: min-content" colspan="2">
-                        <a class="btn btn-success" href="/edit-user/{{teacher[0]}}">editar</a>
-                        <a class="btn btn-danger" href="/delete-user/{{teacher[0]}}">eliminar</a>
-                    </td>
+                        {% if teacher[6] == 1 %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-warning" href="/block-user/{{teacher[0]}}">Desbloquear</a>
+                        </td>
+                        {% else %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-success" href="/edit-user/{{teacher[0]}}">Editar</a>
+                            <a class="btn btn-danger" href="/block-user/{{teacher[0]}}">Bloquear</a>
+                        </td>                            
+                        {% endif %}
                     {% endif %}
                 </tr>
             {% endfor %}
