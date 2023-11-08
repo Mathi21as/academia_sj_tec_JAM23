@@ -95,8 +95,8 @@
                     <td>{{ student[3] }}</td>
                     <td>{{ student[5] }}</td>
                     <td>
-                        <a class="btn btn-success" href="/edit-student/{{student[0]}}">editar</a>
-                        <a class="btn btn-danger" href="/delete-student/{{student[0]}}">eliminar</a>
+                        <a class="btn btn-success" href="/edit-user/{{student[0]}}">editar</a>
+                        <a class="btn btn-danger" href="/delete-user/{{student[0]}}">eliminar</a>
                     </td>
                 </tr>
             {% endfor %}
@@ -138,8 +138,8 @@
                     <td>{{ teacher[5] }}</td>
                     {% if current_user.role == "admin" %}
                     <td style="width: min-content" colspan="2">
-                        <a class="btn btn-success" href="/edit-teacher/{{teacher[0]}}">editar</a>
-                        <a class="btn btn-danger" href="/delete-teacher/{{teacher[0]}}">eliminar</a>
+                        <a class="btn btn-success" href="/edit-user/{{teacher[0]}}">editar</a>
+                        <a class="btn btn-danger" href="/delete-user/{{teacher[0]}}">eliminar</a>
                     </td>
                     {% endif %}
                 </tr>
