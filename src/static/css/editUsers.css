@@ -98,6 +98,11 @@
     width: 100%;
 }
 
-.formInputUpdateProfile #role option:hover{
-    background-color: var(--main-orange) !important;
+.formInputUpdateProfile select {
+	overflow-y: hidden;
+}
+
+.formInputUpdateProfile #role option:hover,
+.formInputUpdateProfile #role option:checked {
+   background: var(--main-orange);
 }

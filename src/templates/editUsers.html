@@ -84,10 +84,11 @@
             </div>
               <div class="formInputUpdateProfile">
                 <p class="role">Rol</p>
-                <select name="role" id="role">
+                <select name="role" onfocus="this.size=3;" onblur="this.size=0;"
+                        onchange="this.size=1; this.blur()" id="role">
                     <option value="student" {% if user.role == "student"  %} selected="true" {% endif  %} >Estudiante</option>
                     <option value="teacher" {% if user.role == "teacher"  %} selected="true" {% endif  %}>Profesor</option>
-                    <option value="admin"  {% if user.role == "admin"  %} selected="true" {% endif  %}>Administrador</option>
+                    <option value="admin" {% if user.role == "admin"  %} selected="true" {% endif  %}>Administrador</option>
                 </select>              
               </div>
             </div>
