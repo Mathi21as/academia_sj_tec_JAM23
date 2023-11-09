@@ -37,10 +37,7 @@
                 <th scope="col">Duracion</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Profesor</th>
-                {% if current_user.role == "admin" %}
-                    <th scope="col">Acciones</th>
-                    <th scope="col"></th>
-                {% endif %}
+                <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -53,10 +50,16 @@
                     <td>{{ course[4] }} {{ course[5] }}</td>
                     {% if current_user.role == "admin" %}
                         <td style="width: min-content" colspan="2">
-                            <a class="btn btn-success" href="/edit-course/{{course[0]}}">editar</a>
-                            <a class="btn btn-danger" href="/delete-course/{{course[0]}}">eliminar</a>
+                            <a class="btn btn-success" href="/edit-course/{{course[0]}}">Editar</a>
+                            <a class="btn btn-danger" href="/delete-course/{{course[0]}}">Eliminar</a>
                         </td>
+                    {% elif  current_user.role == "student" %}  
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-success" href="/course-details/{{course[0]}}">Ver</a>
+                        </td>
+
                     {% endif %}
+
                 </tr>
             {% endfor %}
         </tbody>

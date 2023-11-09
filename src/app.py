@@ -67,7 +67,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':        
-        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], None )
+        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], 0, None )
         loguedUser = ModelUser.login(db, user)
 
         if loguedUser != None:
@@ -176,8 +176,7 @@ def blockUser(id):
             else:
                 user = ModelUser.get_by_id(db, id)
                 flash("Error modificando usuario", "error")
-                return render_template("blockUser.html", csrf_token = csrf, user = user)
-            
+                return render_template("blockUser.html", csrf_token = csrf, user = user)            
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
@@ -185,6 +184,31 @@ def blockUser(id):
 
 # -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- -------------- CURSOS --------------
 # -------------- CURSOS --------------- -------------- CURSOS ----------------------------------------- -------------- CURSOS -------------- -------------- CURSOS --------------
+@app.route("/course-details/<id>", methods=['GET', 'POST'])
+@login_required
+def getCourse(id):
+    if (not id.isnumeric()):
+        return render_template("error.html", message="Url no valida.")
+    if request.method == "GET":
+        course = ModelCourse.findById(db,id)
+        return render_template("courseDetails.html",csrf_token = csrf, course = course)
+    
+    # if(request.method == "POST" and current_user.role == "admin"):
+    #     course = Course(
+    #         None,
+    #         request.form['course_teacher'],
+    #         request.form['course_name'],
+    #         request.form['course_duration'],
+    #         request.form['course_description'])
+    #     ModelCourse.update(db, course, id)
+    #     return redirect(url_for('dashboard'))
+    # elif(current_user.role == "admin"):
+    #     course = ModelCourse.findById(db, id)
+    #     teachers = ModelUser.getAllByRoleForRender(db, "teacher")
+    #     return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
+    # else:
+    #     return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
 
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
