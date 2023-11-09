@@ -47,7 +47,8 @@ def register():
                         request.form['dni'] ,
                         request.form['email'] , 
                         request.form['password'], 
-                        request.form['gender']
+                        request.form['gender'] ,
+                        0
                         )
             registerUser = ModelUser.register(db, user)
             if registerUser:
