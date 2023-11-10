@@ -1,8 +1,10 @@
 class ModelInscription:
+    @classmethod
     def inscription(self, db, user, courseId):
         try:
+            print(user.id, courseId, user.role)
             cursor = db.connection.cursor()
-            sql = "INSERT INTO inscription VALUES(null, %i, %i, %s);"
+            sql = "INSERT INTO inscription (id_user, id_course, role) VALUES(%s, %s, %s);"
             cursor.execute(sql, (user.id, courseId, user.role))
             db.connection.commit()
             return True

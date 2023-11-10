@@ -156,8 +156,9 @@ def editUser(id):
            None,
            None,
            None,
+           None,
            request.form['role'])
-        
+        print(user.role)
         updatedUser = ModelUser.updateByAdmin(db, user)      
         if updatedUser:
             flash("Actualizacion de usuario correcta", "success")
@@ -218,18 +219,6 @@ def addCourse():
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template("courseForm.html", csrf_token = csrf, teachers = teachers)
 
-@app.route("/inscription", methods=['GET', 'POST'])
-def inscriptionCourse():
-    if(request.method == "POST"):
-        idCourse = request.form['nameCourse']
-        print(idCourse)
-        ModelInscription.inscription(db, current_user, idCourse)
-        flash("Se completo la inscripcion al curso correctamente.")
-        return redirect(url_for('dashboard'))
-    else:
-        return render_template("inscripcionCurso.html")
-
-
 @app.route("/edit-course/<id>", methods=['GET', 'POST'])
 @login_required
 def editCourse(id):
@@ -284,16 +273,19 @@ def deleteCoursePost():
 
 
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
-# -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
-@app.route("/inscripcion", methods=['GET', 'POST'])
+# -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES --------------
+
+@app.route("/inscription", methods=['GET', 'POST'])
 @login_required
-def inscription():
-    if(request.method == "POST"):
-        ModelInscription.inscription(db, current_user, "")
-        return
+def inscriptionCourse():
+    if (request.method == "POST"):
+        idCourse = request.form['courseId']
+        ModelInscription.inscription(db, current_user, idCourse)
+        flash("Se completo la inscripcion al curso correctamente.")
+        return redirect(url_for('dashboard'))
     else:
         courseList = ModelCourse.findAll(db)
-        return render_template("inscripcionCurso.html", courseList = courseList, csrf_token = csrf)    
+        return render_template("inscripcionCurso.html", courseList=courseList, csrf_token=csrf)
 
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
 

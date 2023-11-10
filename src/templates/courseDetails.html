@@ -30,7 +30,8 @@
         <p>Duracion</p>
         <p>{{course.duration}}</p>
 
-        <form class="form-signin form_div" action="/inscripcion/" method="POST">
+        <form class="form-signin form_div" action="/inscription" method="POST">
+            <input type="hidden" value="{{course.id}}" name="courseId">
             <button class=" " type="submit"> INSCRIBIRME </button>
         </form>
     </div>

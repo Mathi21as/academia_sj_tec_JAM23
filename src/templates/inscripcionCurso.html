@@ -8,7 +8,7 @@
 <form action="/inscription" method="POST" class="my-3">
   <label for="nameCourse">Curso: </label>
   <select name="nameCourse" id="nameCourse">
-    {% for course in courseList %}
+    {% for courseList in courseList %}
       <option value="{{course[0]}}">{{course[1]}}</option>
     {% endfor %}
   </select>
