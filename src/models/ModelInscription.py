@@ -15,8 +15,8 @@ class ModelInscription:
     def inscription(self, db, user, courseId):
         try:
             cursor = db.connection.cursor()
-            sql = "INSERT INTO inscription (id_user, id_course, role) VALUES(%s, %s, %s);"
-            cursor.execute(sql, (user.id, courseId, user.role))
+            sql = "INSERT INTO inscription (id_user, id_course, role) VALUES(%s, %s,'student');"
+            cursor.execute(sql, (user.id, courseId))
             db.connection.commit()
             return True
         except Exception as ex:

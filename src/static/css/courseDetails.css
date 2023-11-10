@@ -1,0 +1,64 @@
+
+.courseDetailsContainer{
+    width: 80%;
+    padding: 25px 50px;
+    border: solid 1px;
+    border-radius: 25px;
+    background-color: var(--main-background-dark);
+    color: var(--main-orange);
+    border-color: var(--main-orange);
+    margin: 100px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.courseDetailsContainer .arrow {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    
+}
+
+.courseDetailsContainer .courseDetailsInfoContainer{
+    border: none;
+    margin-top: 0;
+}
+
+.courseDetailsContainer .courseDetailsInfoContainer span{
+    display: flex;      
+}
+.courseDetailsContainer .courseDetailsInfoContainer span div{
+    width: 49%;
+}
+
+.courseDetailsContainer .courseDetailsInfoContainer span div.descriptionContainer{   
+    
+    
+
+}
+.courseDetailsContainer p , .courseDetailsContainer .descriptionContainer p {
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+}
+.courseDetailsContainer p.courseInfo{
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: -20px;
+}
+.courseDetailsContainer .descriptionContainer p.courseInfo{
+
+    font-size: 16px;
+}
+
+.courseDetailsInfoContainer button{
+    padding: 10px;
+    background-color: var(--main-background-dark);
+    border: solid 1px;
+    border-color: var(--main-orange);
+    border-radius: 15px;
+    color: var(--main-orange);
+    margin-left: 15%;
+    width: 70%;
+} 

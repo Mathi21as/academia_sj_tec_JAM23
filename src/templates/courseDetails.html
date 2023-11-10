@@ -4,36 +4,39 @@
 
 <!-- css propio -->
 {% block customCSS %}
-<link rel="stylesheet" href="{{url_for('static', filename = 'css/courseDetails.css.css')}}">
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/courseDetails.css')}}">
 {% endblock %}
 
 {% block body %}
 
-<div class=" ">
-    <div class=" ">
+<div class="courseDetailsContainer">
+    <div class="arrow">
         <a href="/dashboard"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="30px" height="50px"><path d="M32 15H3.41l8.29-8.29-1.41-1.42-10 10a1 1 0 0 0 0 1.41l10 10 1.41-1.41L3.41 17H32z" style="fill:#FFBF5F" data-name="4-Arrow Left"/></svg></a>
         <h4>Detalles del curso</h4>
     </div>
 
-    <div class="container containerTableList CoursesList">
-        <p>Nombre del curso</p>
-        <p>{{course.name}}</p>
-
-        
-        <p>Profe a cargo</p>
-        <p>{{course.id_teacher.name}}, {{course.id_teacher.last_name}}</p>
-
-        
-        <p>DESCRIPCIONSO</p>
-        <p >{{course.description}}</p>
-        
-        <p>Duracion</p>
-        <p>{{course.duration}}</p>
+    <div class="container containerTableList CoursesList courseDetailsInfoContainer">
+        <span>
+            <div>
+                <p>Nombre</p>
+                <p class="courseInfo">{{course.name}}</p>
+                <p>Profesor a cargo</p>
+                <p class="courseInfo">{{course.id_teacher.name}}, {{course.id_teacher.last_name}}</p>
+                <p>Duracion</p>
+                <p class="courseInfo">{{course.duration}}</p>
+            </div>
+            <div class="descriptionContainer">            
+                <p>Descripcion</p>
+                <p class="courseInfo">{{course.description}}</p>
+            </div>
+        </span>
 
         <form class="form-signin form_div" action="/inscription" method="POST">
             <input type="hidden" value="{{course.id}}" name="courseId">
             <button class=" " type="submit"> INSCRIBIRME </button>
         </form>
+
+
     </div>
 </div>
 {% endblock %}
