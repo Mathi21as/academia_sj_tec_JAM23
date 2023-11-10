@@ -262,7 +262,7 @@ def deleteCoursePost():
     idCourse = request.form['id_course']
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    elif (current_user.role == "admin"):
+    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(idCourse).id_teacher):
         ModelCourse.delete(db, idCourse)
         return redirect(url_for('dashboard'))
     else:
