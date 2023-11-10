@@ -13,14 +13,14 @@ class DevelopmentConfig(Config):
     DEBUG = True
     MYSQL_HOST = 'localhost'
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = '154647572' # 'root1234'
+    MYSQL_PASSWORD = 'root1234' # 'root1234'  '154647572'
     MYSQL_DB = 'academia_jam2023'
 
 class appConfig():
     def init(app):
         app.config['MYSQL_HOST'] = 'localhost'
         app.config['MYSQL_USER'] = 'root'
-        app.config['MYSQL_PASSWORD'] = '154647572' # 'root1234'
+        app.config['MYSQL_PASSWORD'] = 'root1234' # 'root1234'
         app.config['MYSQL_DB'] = 'academia_jam2023'
         app.config['SECRET_KEY'] = "teeest"
 

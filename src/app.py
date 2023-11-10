@@ -214,7 +214,7 @@ def getCourse(id):
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
 def addCourse():
-    if(request.method == "POST" and current_user.role == "admin"):
+    if(request.method == "POST" and (current_user.role == "admin" or current_user.role == "teacher")):
         course = Course(
             None,
             request.form['course_teacher'],
@@ -232,7 +232,7 @@ def addCourse():
 def editCourse(id):
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    if(request.method == "POST" and current_user.role == "admin"):
+    if(request.method == "POST" and (current_user.role == "admin" or current_user.role == "teacher")):
         course = Course(
             None,
             request.form['course_teacher'],
@@ -241,7 +241,7 @@ def editCourse(id):
             request.form['course_description'])
         ModelCourse.update(db, course, id)
         return redirect(url_for('dashboard'))
-    elif(current_user.role == "admin"):
+    elif(current_user.role == "admin" or current_user.role == "teacher"):
         course = ModelCourse.findById(db, id)
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
@@ -253,7 +253,7 @@ def editCourse(id):
 def deleteCourse(id):
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    if(current_user.role == "admin"):
+    if(current_user.role == "admin" or current_user.role == "teacher"):
         course = ModelCourse.findById(db, id)
         return render_template("delete.html", csrf_token = csrf, course = course)
     else:
@@ -265,7 +265,7 @@ def deleteCoursePost():
     idCourse = request.form['id_course']
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    elif (current_user.role == "admin"):
+    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(idCourse).id_teacher):
         ModelCourse.delete(db, idCourse)
         return redirect(url_for('dashboard'))
     else:
