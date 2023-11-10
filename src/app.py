@@ -288,6 +288,7 @@ def deleteCoursePost():
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES --------------
 
+
 @app.route("/inscription", methods=['GET', 'POST'])
 @login_required
 def inscriptionCourse():
@@ -299,6 +300,13 @@ def inscriptionCourse():
     else:
         courseList = ModelCourse.findAll(db)
         return render_template("inscripcionCurso.html", courseList=courseList, csrf_token=csrf)
+    
+@app.route("/delete-inscription/<id>", methods=['GET', 'POST'])
+@login_required
+def deleteInscriptionCourse(id):
+    ModelInscription.deregistration(db, id)
+    flash("Se elimino la inscripcion", "success")
+    return redirect(url_for('dashboard'))
 
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
 

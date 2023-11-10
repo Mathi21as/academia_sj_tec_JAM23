@@ -18,9 +18,11 @@
     <header class="header">
         <div class="header_div">
             <div>
-                <img src="../static/img/logoJAM-eduProyect.png" width="100px"/>
+                <a href="/dashboard">
+                    <img src="../static/img/logoJAM-eduProyect.png"  class="logoNavBar" />
+                </a>
                 {% if current_user.id != null %}
-                    <a class="linkNavBar"href="/courses">CURSOS</a>
+                    <a class="linkNavBar" href="/courses">CURSOS</a>
                 {% endif %}
             </div>
             <div>

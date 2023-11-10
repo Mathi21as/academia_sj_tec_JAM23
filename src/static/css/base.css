@@ -57,6 +57,10 @@ body {
 	padding: 2px 8px;
 	font-size: 20px;
 }
+.header_div .logoNavBar{
+    border-radius: 0 !important;
+    width: 100px;
+}
 
 .goldenDivider{
     background-color: var(--main-orange);

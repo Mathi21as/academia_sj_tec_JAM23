@@ -21,7 +21,7 @@ class ModelInscription:
             return True
         except Exception as ex:
             return str(ex)
-
+        
     @classmethod
     def findInscriptionByCourseId(self, db, id):
         try:
@@ -32,12 +32,13 @@ class ModelInscription:
             return inscriptions
         except Exception as ex:
             return str(ex)
-
-    def deregistration(self, db, inscription):
+        
+    @classmethod
+    def deregistration(self, db, id):
         try:
             cursor = db.connection.cursor()
-            sql = "DELETE FROM users_courses WHERE id = %i;"
-            cursor.execute(sql, inscription.id)
+            sql = "DELETE FROM inscription WHERE id ='{}'".format(id)
+            cursor.execute(sql)
             db.connection.commit()
             return True
         except Exception as ex:
