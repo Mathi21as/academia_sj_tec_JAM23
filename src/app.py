@@ -174,7 +174,7 @@ def editUser(id):
 def blockUser(id):
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    if(current_user.role == "admin"):
+    if(current_user.role == "admin" or current_user.role == "teacher"):
         if request.method == "GET":
             user = ModelUser.get_by_id(db, id)
             return render_template("blockUser.html", csrf_token = csrf, user = user)
@@ -238,7 +238,18 @@ def editCourse(id):
         course = ModelCourse.findById(db, id)
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
         inscriptedStudents = ModelUser.getAllInscriptedStudentsByIdCourse(db, id)
-        return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers , inscriptedStudents = inscriptedStudents)
+        inscriptedStudentsUnblocked = []
+        inscriptedStudentsBlocked = []
+        for inscriptedStudent in inscriptedStudents:
+            print(inscriptedStudent[7])
+            if(inscriptedStudent[7] == 1):
+                inscriptedStudentsBlocked.append(inscriptedStudent)
+            else:
+                inscriptedStudentsUnblocked.append(inscriptedStudent)
+
+        return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit",
+                               teachers = teachers , inscriptedStudents = inscriptedStudentsUnblocked,
+                               inscriptedStudentsBlocked = inscriptedStudentsBlocked)
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
