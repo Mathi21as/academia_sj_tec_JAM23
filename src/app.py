@@ -4,6 +4,7 @@ from flask_wtf.csrf import CSRFProtect  # para que formulario de login tenga cod
 from flask_login import LoginManager , login_user, logout_user, login_required, current_user
 from flask_mail import Mail
 from utils.EmailManager import EmailManager
+import datetime as dt
 from dotenv import load_dotenv
 from config import config
 from config import appConfig
@@ -240,15 +241,15 @@ def editCourse(id):
         inscriptedStudents = ModelUser.getAllInscriptedStudentsByIdCourse(db, id)
         inscriptedStudentsUnblocked = []
         inscriptedStudentsBlocked = []
+        # TODO: ver si se deja la tabla de estudiantes bloqueados
         for inscriptedStudent in inscriptedStudents:
-            print(inscriptedStudent[7])
             if(inscriptedStudent[7] == 1):
                 inscriptedStudentsBlocked.append(inscriptedStudent)
             else:
                 inscriptedStudentsUnblocked.append(inscriptedStudent)
 
         return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit",
-                               teachers = teachers , inscriptedStudents = inscriptedStudentsUnblocked,
+                               teachers = teachers , inscriptedStudents = inscriptedStudents,
                                inscriptedStudentsBlocked = inscriptedStudentsBlocked)
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
@@ -300,6 +301,18 @@ def inscriptionCourse():
 
 # -------------- INSCRIPCIONES --------------- -------------- INSCRIPCIONES ----------------------------------------- -------------- INSCRIPCIONES -------------- 
 
+
+# -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
+# -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
+@app.route("/asistencia", methods=['POST'])
+def takeAttendance():
+    idCourse = request.form['idCourse']
+    idStudent = request.form['idStudent']
+    date = dt.date.today()
+    return redirect()
+
+
+# -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
 
 
 

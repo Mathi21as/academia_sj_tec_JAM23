@@ -92,7 +92,7 @@
             {% endif %}
         </div>
         </div>
-        <button class="w-100" type="submit">
+        <button class="w-100 form_button" type="submit">
         {% if mode == "edit" %}
         Editar curso
         {% else %}
@@ -125,9 +125,16 @@
                             <td>{{ student[2] }}</td>
                             <td>{{ student[3] }}</td>
                             <td>{{ student[5] }}</td>
-                            {% if current_user.role == "admin" or current_user.role == "teacher" %}
-                                {% if student[6] == 1 %}
-                                <td style="width: min-content" colspan="2">
+                            {% if current_user.role == "teacher" %}
+                                <td class="px-1 py-2">
+                                    <form action="/asistencia" method="POST">
+                                        <input type="hidden" name="idCourse" value="course.id"/>
+                                        <input type="hidden" name="idStudent" value="student[0]"/>
+                                        <button type="submit" class="btn btn-success"> Dar presente </button>
+                                    </form>
+                                </td>
+                                {% if student[7] == 1 %}
+                                <td style="width: min-content" colspan="2" class="px-1 py-2">
                                     <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
                                 </td>
                                 {% else %}
@@ -170,15 +177,9 @@
                             <td>{{ student[3] }}</td>
                             <td>{{ student[5] }}</td>
                             {% if current_user.role == "admin" or current_user.role == "teacher" %}
-                                {% if student[6] == 1 %}
                                 <td style="width: min-content" colspan="2">
                                     <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
                                 </td>
-                                {% else %}
-                                <td style="width: min-content" colspan="2">
-                                    <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
-                                </td>
-                                {% endif %}
                             {% endif %}
                         </tr>
                     {% endfor %}

@@ -31,14 +31,15 @@
 		border: solid 1px;
 		border-radius: 100%;
 	};
-	& button {
+}
+
+.form_button {
 		padding: 10px;
 		background-color: var(--main-background-dark);
 		border: solid 1px;
 		border-color: var(--main-orange);
 		border-radius: 15px;
 		color: var(--main-orange);
-	};
 }
 
 .form_fields {

@@ -35,7 +35,8 @@ class ModelUser():
         try:            
             print(user.name, user.last_name, user.phone, user.gender, user.email)
             cursor = db.connection.cursor()
-            sql = "UPDATE user SET `name` = '{}', `last_name` = '{}', `phone` = '{}',  `gender` = '{}' WHERE email = '{}'".format(user.name, user.last_name, user.phone, user.gender, user.email)
+            sql = """UPDATE user SET `name` = '{}', `last_name` = '{}', `phone` = '{}',  `gender` = '{}' 
+                        WHERE email = '{}'""".format(user.name, user.last_name, user.phone, user.gender, user.email)
             cursor.execute(sql)
             db.connection.commit()
             cursor.close()
@@ -128,7 +129,8 @@ class ModelUser():
     def updateByAdmin(self, db, user):
         try:
             cursor = db.connection.cursor()
-            sql = "UPDATE user SET name = '{}', last_name = '{}', phone = '{}', role = '{}'  WHERE id = '{}'".format(user.name, user.last_name, user.phone, user.role, user.id)
+            sql = "UPDATE user SET name = '{}', last_name = '{}', phone = '{}', role = '{}'  WHERE id = '{}'"\
+                .format(user.name, user.last_name, user.phone, user.role, user.id)
             cursor.execute(sql)
             db.connection.commit()
             cursor.close()
