@@ -17,8 +17,12 @@ class ModelCourse():
     def findAllInscriptionsByIdUser(self, db, id):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT c.id, c.id_teacher, c.name, c.duration, c.description FROM inscription
-                        JOIN user ON id_user = user.id
+            sql = """SELECT c.id, c.id_teacher, c.name, c.duration, c.description ,  
+                                                                    i.id , 
+                                                                    (SELECT u.name FROM user u WHERE u.id = c.id_teacher), 
+                                                                    (SELECT u.last_name FROM user u WHERE u.id = c.id_teacher) 
+                        FROM inscription i
+                        JOIN user u ON id_user =  u.id
                         JOIN course c ON id_course = c.id
                         WHERE id_user ={};""".format(id)
             cursor.execute(sql)

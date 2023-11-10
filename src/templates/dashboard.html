@@ -22,14 +22,16 @@
 {% endif  %}
 {% endwith %}
 
+<!-- LISTA DE INSCRIPCIONES -->
+{% if current_user.role != "admin"  %}
 <div class="container containerTableList CoursesList">    
     <h4>Listado de inscripciones</b></h4>
     {% if courseInscriptionList %}
     <table class="table tableList">
         <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
+                <th scope="col">ID Inscripcion</th>
+                <th scope="col">Curso</th>
                 <th scope="col">Duracion</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Profesor</th>
@@ -39,11 +41,11 @@
         <tbody>
             {% for course in courseInscriptionList %}
                 <tr>
-                    <td>{{ course[0] }}</td>
-                    <td>{{ course[1] }}</td>
+                    <td>{{ course[5] }}</td>
                     <td>{{ course[2] }}</td>
                     <td>{{ course[3] }}</td>
-                    <td>{{ course[4] }} {{ course[5] }}</td>
+                    <td>{{ course[4] }}</td>
+                    <td>{{ course[6] }} {{ course[7] }}</td>
                     <td style="width: min-content" colspan="2">
                         <a class="btn btn-danger" href="/delete-course/{{course[0]}}">Eliminar</a>
                     </td>
@@ -56,8 +58,9 @@
     {% endif %}
 
 </div>
+{% endif  %}
 
-
+<!-- LISTA DE CURSOS -->
 <div class="container containerTableList CoursesList">    
     <h4>Listado de cursos</b></h4>
     {% if current_user.role == "admin" or current_user.role == "teacher"%}
@@ -113,54 +116,8 @@
 
 </div>
 
-
-
 {% if current_user.role == "admin" %}
-<div class="container studentsList containerTableList">    
-    <h4>Listado de estudiantes</b></h4>
-    {% if studentList %}
-    <table class="table tableList">
-        <thead>
-            <tr>
-                <th scope="col">ID</th> 
-                <th scope="col">Dni</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Email</th>
-                <th scope="col">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in studentList %}
-                <tr>
-                    <td>{{ student[0] }}</td>
-                    <td>{{ student[4] }}</td>
-                    <td>{{ student[1] }}</td>
-                    <td>{{ student[2] }}</td>
-                    <td>{{ student[3] }}</td>
-                    <td>{{ student[5] }}</td>
-                    {% if current_user.role == "admin" %}
-                        {% if student[6] == 1 %}
-                        <td style="width: min-content" colspan="2">
-                            <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
-                        </td>
-                        {% else %}
-                        <td style="width: min-content" colspan="2">
-                            <a class="btn btn-success" href="/edit-rol/{{student[0]}}">Editar</a>
-                            <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
-                        </td>                            
-                        {% endif %}
-                    {% endif %}
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% else %}
-        <p>No hay estudiantes cargados</p>
-    {% endif %}
-</div>
-
+<!-- LISTA DE PROFES -->
 <div class="container teacherList containerTableList">    
     <h4>Listado de profesores</b></h4>
     {% if teacherList %}
@@ -208,6 +165,52 @@
         <p>No hay profesores cargados</p>
     {% endif %}
 
+</div>
+
+<!-- LISTA DE ESTUDIANTES -->
+<div class="container studentsList containerTableList">    
+    <h4>Listado de estudiantes</b></h4>
+    {% if studentList %}
+    <table class="table tableList">
+        <thead>
+            <tr>
+                <th scope="col">ID</th> 
+                <th scope="col">Dni</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Email</th>
+                <th scope="col">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in studentList %}
+                <tr>
+                    <td>{{ student[0] }}</td>
+                    <td>{{ student[4] }}</td>
+                    <td>{{ student[1] }}</td>
+                    <td>{{ student[2] }}</td>
+                    <td>{{ student[3] }}</td>
+                    <td>{{ student[5] }}</td>
+                    {% if current_user.role == "admin" %}
+                        {% if student[6] == 1 %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
+                        </td>
+                        {% else %}
+                        <td style="width: min-content" colspan="2">
+                            <a class="btn btn-success" href="/edit-rol/{{student[0]}}">Editar</a>
+                            <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
+                        </td>                            
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No hay estudiantes cargados</p>
+    {% endif %}
 </div>
 {% endif %}
 

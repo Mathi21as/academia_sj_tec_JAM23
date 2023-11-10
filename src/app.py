@@ -116,18 +116,15 @@ def profile():
 @app.route('/dashboard')
 @login_required
 def dashboard():
-    if current_user.role == "student":
-        return splitCoursesByInscription ("student" , current_user.id)    
-    elif current_user.role == "teacher":        
-        return splitCoursesByInscription ("student" , current_user.id)
+    if current_user.role == "student" or current_user.role == "teacher":
+        return getSplitedCoursesByInscription (current_user.id)    
     else:
         courseList = ModelCourse.findAll(db)
-        print(courseList)
         studentList = ModelUser.getAllByRoleForRender(db, "student")
         teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template('dashboard.html', studentList = studentList, teacherList = teacherList, courseList = courseList)
 
-def splitCoursesByInscription (role , id):
+def getSplitedCoursesByInscription (id):
         courseInscriptionList = ModelCourse.findAllInscriptionsByIdUser(db , id)
         allCourseList = ModelCourse.findAll(db)
         courseList = []
