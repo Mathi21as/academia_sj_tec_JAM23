@@ -227,6 +227,18 @@ def addCourse():
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template("courseForm.html", csrf_token = csrf, teachers = teachers)
 
+@app.route("/inscription", methods=['GET', 'POST'])
+def inscriptionCourse():
+    if(request.method == "POST"):
+        idCourse = request.form['nameCourse']
+        print(idCourse)
+        ModelInscription.inscription(db, current_user, idCourse)
+        flash("Se completo la inscripcion al curso correctamente.")
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template("inscripcionCurso.html")
+
+
 @app.route("/edit-course/<id>", methods=['GET', 'POST'])
 @login_required
 def editCourse(id):
@@ -265,7 +277,8 @@ def deleteCoursePost():
     idCourse = request.form['id_course']
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(idCourse).id_teacher):
+    #se valida que el proferor que quiera elminiar un curso sea el mismo que lo imparte
+    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(idCourse).id_teacher.id):
         ModelCourse.delete(db, idCourse)
         return redirect(url_for('dashboard'))
     else:

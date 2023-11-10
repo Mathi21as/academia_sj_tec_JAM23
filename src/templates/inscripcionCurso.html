@@ -5,11 +5,11 @@
 
 {% block body %}
 
-<form action="/incripcion" method="POST" class="my-3">
+<form action="/inscription" method="POST" class="my-3">
   <label for="nameCourse">Curso: </label>
   <select name="nameCourse" id="nameCourse">
     {% for course in courseList %}
-      <option>{{course}}</option>
+      <option value="{{course[0]}}">{{course[1]}}</option>
     {% endfor %}
   </select>
   <button type="submit">Inscribirse</button>
