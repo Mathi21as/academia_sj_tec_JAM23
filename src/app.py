@@ -10,10 +10,11 @@ from config import config
 from config import appConfig
 from models.ModelInscription import ModelInscription
 from models.ModelCourse import ModelCourse
-
+from models.ModelAttendance import ModelAttendance
 from models.ModelUser import ModelUser
 from models.entities.User import User
 from models.entities.Course import Course
+from models.entities.Attendance import Attendance
 # from routers.authRouter import authRouter
 
 
@@ -293,7 +294,7 @@ def inscriptionCourse():
     if (request.method == "POST"):
         idCourse = request.form['courseId']
         ModelInscription.inscription(db, current_user, idCourse)
-        flash("Se completo la inscripcion al curso correctamente.")
+        flash("Se completo la inscripcion al curso correctamente.", "success")
         return redirect(url_for('dashboard'))
     else:
         courseList = ModelCourse.findAll(db)
@@ -304,12 +305,18 @@ def inscriptionCourse():
 
 # -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
 # -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
-@app.route("/asistencia", methods=['POST'])
-def takeAttendance():
-    idCourse = request.form['idCourse']
-    idStudent = request.form['idStudent']
-    date = dt.date.today()
-    return redirect()
+@app.route("/attendance/<idCourse>/<idStudent>")
+@login_required
+def takeAttendance(idCourse, idStudent):
+    if(current_user.role == "teacher"):
+        idInscriptionStudent = ModelInscription.findByStudentAndCourseId(db, idCourse, idStudent)
+        date = dt.date.today()
+        attendance = Attendance(None, idInscriptionStudent, date, 1)
+        ModelAttendance.takeAttendance(db, attendance)
+        flash("se dio asistencia", "success")
+        return redirect(url_for("dashboard"))
+    else:
+        return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
 
 # -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 
