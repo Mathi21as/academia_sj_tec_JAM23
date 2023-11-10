@@ -127,11 +127,8 @@
                             <td>{{ student[5] }}</td>
                             {% if current_user.role == "teacher" %}
                                 <td class="px-1 py-2">
-                                    <form action="/asistencia" method="POST">
-                                        <input type="hidden" name="idCourse" value="course.id"/>
-                                        <input type="hidden" name="idStudent" value="student[0]"/>
-                                        <button type="submit" class="btn btn-success"> Dar presente </button>
-                                    </form>
+                                    <a class="btn btn-success" href="/attendance/{{course.id}}/{{student[0]}}">
+                                        Dar presente</a>
                                 </td>
                                 {% if student[7] == 1 %}
                                 <td style="width: min-content" colspan="2" class="px-1 py-2">
