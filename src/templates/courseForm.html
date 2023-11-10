@@ -70,6 +70,7 @@
                 <p>* Campo obligatorio</p>
             </div>
 
+            {% if current_user.role == "admin" %}
             <div class="mt-2">
                 <label for="course_teacher">Profesor a cargo: </label>
                 {% if mode == "edit" %}
@@ -88,6 +89,7 @@
                 {% endif %}
                 <p>* Campo obligatorio</p>
             </div>
+            {% endif %}
         </div>
         </div>
         <button class="w-100" type="submit">
@@ -97,6 +99,52 @@
         Crear curso
         {% endif %}
         </button>
+
+        {% if mode == "edit" %}
+        <div class="container studentsList containerTableList">    
+            <h4>Inscriptos</b></h4>
+            {% if inscriptedStudents %}
+            <table class="table tableList">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th> 
+                        <th scope="col">Dni</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in inscriptedStudents %}
+                        <tr>
+                            <td>{{ student[0] }}</td>
+                            <td>{{ student[4] }}</td>
+                            <td>{{ student[1] }}</td>
+                            <td>{{ student[2] }}</td>
+                            <td>{{ student[3] }}</td>
+                            <td>{{ student[5] }}</td>
+                            {% if current_user.role == "admin" or current_user.role == "teacher" %}
+                                {% if student[6] == 1 %}
+                                <td style="width: min-content" colspan="2">
+                                    <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
+                                </td>
+                                {% else %}
+                                <td style="width: min-content" colspan="2">
+                                    <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
+                                </td>                            
+                                {% endif %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+                <p>No hay estudiantes inscriptos aun..</p>
+            {% endif %}
+        </div>            
+        {% endif %}
       </form>
     </div>
 </div>

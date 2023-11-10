@@ -117,18 +117,29 @@ def profile():
 @login_required
 def dashboard():
     if current_user.role == "student":
-        courseList = ModelCourse.findAll(db)
-        return render_template('dashboard.html', courseList = courseList)
+        return splitCoursesByInscription ("student" , current_user.id)    
     elif current_user.role == "teacher":        
-        courseList = ModelCourse.findAll(db)
-        studentList = ModelUser.getAllByRoleForRender(db, "student")
-        return render_template('dashboard.html', studentList = studentList, courseList = courseList)
+        return splitCoursesByInscription ("student" , current_user.id)
     else:
         courseList = ModelCourse.findAll(db)
         print(courseList)
         studentList = ModelUser.getAllByRoleForRender(db, "student")
         teacherList = ModelUser.getAllByRoleForRender(db, "teacher")
         return render_template('dashboard.html', studentList = studentList, teacherList = teacherList, courseList = courseList)
+
+def splitCoursesByInscription (role , id):
+        courseInscriptionList = ModelCourse.findAllInscriptionsByIdUser(db , id)
+        allCourseList = ModelCourse.findAll(db)
+        courseList = []
+        for course in allCourseList:
+            addCourse = True
+            for courseInscripted in courseInscriptionList:
+                if courseInscripted[0] == course[0]:
+                    addCourse = False
+            if addCourse:
+                courseList.append(course)
+        return render_template('dashboard.html', courseList = courseList , courseInscriptionList = courseInscriptionList)
+    
 
 @login_manager_app.user_loader
 def load_user(id):
@@ -193,31 +204,14 @@ def getCourse(id):
     if request.method == "GET":
         course = ModelCourse.findById(db,id)
         return render_template("courseDetails.html",csrf_token = csrf, course = course)
-    
-    # if(request.method == "POST" and current_user.role == "admin"):
-    #     course = Course(
-    #         None,
-    #         request.form['course_teacher'],
-    #         request.form['course_name'],
-    #         request.form['course_duration'],
-    #         request.form['course_description'])
-    #     ModelCourse.update(db, course, id)
-    #     return redirect(url_for('dashboard'))
-    # elif(current_user.role == "admin"):
-    #     course = ModelCourse.findById(db, id)
-    #     teachers = ModelUser.getAllByRoleForRender(db, "teacher")
-    #     return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
-    # else:
-    #     return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
-
 
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
 def addCourse():
-    if(request.method == "POST" and current_user.role == "admin"):
+    if(request.method == "POST" and (current_user.role == "admin" or current_user.role == "teacher") ):
         course = Course(
             None,
-            request.form['course_teacher'],
+            request.form['course_teacher'] if current_user.role == "admin" else current_user.id,
             request.form['course_name'],
             request.form['course_duration'],
             request.form['course_description'])
@@ -231,20 +225,22 @@ def addCourse():
 @login_required
 def editCourse(id):
     if (not id.isnumeric()):
-        return render_template("error.html", message="Url no valida.")
-    if(request.method == "POST" and current_user.role == "admin"):
+        return render_template("error.html", message="Url no valida.")    
+    courseDB = ModelCourse.findById(db , id)
+    if(request.method == "POST" and (current_user.role == "admin" or current_user.id == courseDB.id_teacher.id)):
         course = Course(
             None,
-            request.form['course_teacher'],
+            request.form['course_teacher'] if current_user.role == "admin" else current_user.id,
             request.form['course_name'],
             request.form['course_duration'],
             request.form['course_description'])
         ModelCourse.update(db, course, id)
         return redirect(url_for('dashboard'))
-    elif(current_user.role == "admin"):
+    elif(current_user.role == "admin" or current_user.id == courseDB.id_teacher.id):
         course = ModelCourse.findById(db, id)
         teachers = ModelUser.getAllByRoleForRender(db, "teacher")
-        return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers)
+        inscriptedStudents = ModelUser.getAllInscriptedStudentsByIdCourse(db, id)
+        return render_template("courseForm.html", csrf_token = csrf, course = course, mode = "edit", teachers = teachers , inscriptedStudents = inscriptedStudents)
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
@@ -253,8 +249,9 @@ def editCourse(id):
 def deleteCourse(id):
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
-    if(current_user.role == "admin"):
-        course = ModelCourse.findById(db, id)
+    
+    course = ModelCourse.findById(db, id)
+    if(current_user.role == "admin" or current_user.id == course.id_teacher.id):
         return render_template("delete.html", csrf_token = csrf, course = course)
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")

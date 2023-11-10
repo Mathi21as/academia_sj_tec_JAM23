@@ -23,7 +23,6 @@ class appConfig():
         app.config['MYSQL_PASSWORD'] = '154647572' # 'root1234'
         app.config['MYSQL_DB'] = 'academia_jam2023'
         app.config['SECRET_KEY'] = "teeest"
-
 config = {
     'development': DevelopmentConfig
 }

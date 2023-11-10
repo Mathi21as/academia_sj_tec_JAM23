@@ -95,7 +95,19 @@ class ModelUser():
         except Exception as ex:
             print(str(ex))
             return False
-
+        
+    @classmethod
+    def getAllInscriptedStudentsByIdCourse(self, db, idCourse):
+        try:
+            cursor = db.connection.cursor()
+            sql = """SELECT u.id, u.name, u.last_name, u.phone, u.dni, u.email, u.gender, u.block FROM inscription
+                        JOIN user u ON id_user = u.id
+                        WHERE id_course ={};""".format(idCourse)
+            cursor.execute(sql)
+            courses = cursor.fetchall()
+            return courses
+        except Exception as ex:
+            return str(ex)
 
 #
 #    @classmethod
