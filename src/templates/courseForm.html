@@ -109,11 +109,9 @@
                     <tr>
                         <th scope="col">ID</th> 
                         <th scope="col">Dni</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">Telefono</th>
+                        <th scope="col">Estudiante</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col" colspan="2">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -121,20 +119,19 @@
                         <tr>
                             <td>{{ student[0] }}</td>
                             <td>{{ student[4] }}</td>
-                            <td>{{ student[1] }}</td>
-                            <td>{{ student[2] }}</td>
-                            <td>{{ student[3] }}</td>
+                            <td>{{ student[1] }}, {{ student[2] }}</td>
                             <td>{{ student[5] }}</td>
-                            {% if current_user.role == "teacher" %}
-                                <td class="px-1 py-2">
-                                    <a class="btn btn-success" href="/attendance/{{course.id}}/{{student[0]}}">
-                                        Dar presente</a>
-                                </td>
+                            {% if current_user.role == "teacher"%}
+
                                 {% if student[7] == 1 %}
                                 <td style="width: min-content" colspan="2" class="px-1 py-2">
                                     <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
                                 </td>
                                 {% else %}
+                                <td class="px-1 py-2">
+                                    <a class="btn btn-success" href="/attendance/{{course.id}}/{{student[0]}}">
+                                        Dar presente</a>
+                                </td>
                                 <td style="width: min-content" colspan="2">
                                     <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
                                 </td>                            
