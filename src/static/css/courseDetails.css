@@ -59,6 +59,7 @@
     border-color: var(--main-orange);
     border-radius: 15px;
     color: var(--main-orange);
+    margin-top: 50px;
     margin-left: 15%;
     width: 70%;
 } 
