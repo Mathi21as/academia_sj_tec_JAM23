@@ -321,8 +321,8 @@ def takeAttendance(idCourse, idStudent):
         date = dt.date.today()
         attendance = Attendance(None, idInscriptionStudent, date, 1)
         ModelAttendance.takeAttendance(db, attendance)
-        flash("se dio asistencia", "success")
-        return redirect(url_for("dashboard"))
+        idCourse = idCourse+""
+        return redirect(url_for(f"editCourse", id = idCourse))
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
