@@ -142,7 +142,7 @@ def getSplitedCoursesByInscription (id):
         return render_template('dashboard.html', courseList = courseList , courseInscriptionList = courseInscriptionList)
     
 def checkBlockUser(id):
-    if(ModelUser.get_by_id(db,id).block == 0):
+    if(ModelUser.get_by_id(db,id).block != 0):
         flash("¡USUARIO BLOQUEADO! conctacta con el administrador para seguir los pasos", "bloquedUser")
     
 @login_manager_app.user_loader
@@ -328,7 +328,14 @@ def deleteInscriptionCourse(id):
 @app.route("/attendance/<idCourse>/<idStudent>")
 @login_required
 def takeAttendance(idCourse, idStudent):
-    checkBlockUser(current_user.id)
+
+    #
+    #    checkBlockUser(current_user.id)
+    #       ACA DEBERIAMOS NO PERMITIR LA ASITENCIA DESDE BACK
+    #
+
+
+
     if(current_user.role == "teacher"):
         idInscriptionStudent = ModelInscription.findByStudentAndCourseId(db, idCourse, idStudent)
         date = dt.date.today()
