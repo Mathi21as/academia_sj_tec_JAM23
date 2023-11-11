@@ -1,0 +1,16 @@
+{% extends './base.html' %}
+
+{% block title %}Usuario bloqueado{% endblock %}
+
+<!-- css propio 
+{% block customCSS %}
+<link rel="stylesheet" href="{{url_for('static', filename = 'css/delete.css')}}">
+{% endblock %}
+-->
+{% block body %}
+<div class="main_card">
+    <img src="{{url_for('static', filename = 'icons/error-icon.svg')}}" width="120px" alt="delete-icon">
+    <h3>Ups!</h3>
+    <p>{{ message }}</p>
+</div>
+{% endblock %}

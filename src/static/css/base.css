@@ -181,6 +181,16 @@ body {
     width: 40%;
     margin-left: auto;   
 }
+.alert-bloquedUser{
+    background-color: #d7b5b5;
+    color: rgb(255, 0, 0);
+    border: 4px solid rgb(255, 0, 0);
+    border-radius: 30px;
+    width: 90%;
+    height: 30%;
+    text-align: center;
+    margin-left: 5%;   
+}
 .loginForm .alert-success , .signupForm .alert-success{    
     margin: auto;
 }

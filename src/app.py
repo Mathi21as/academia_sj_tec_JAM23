@@ -94,6 +94,7 @@ def logout():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    checkBlockUser(current_user.id)
     if request.method == 'GET': 
         return render_template('userProfile.html')
     elif request.method == 'POST':
@@ -118,6 +119,7 @@ def profile():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    checkBlockUser(current_user.id)
     if current_user.role == "student" or current_user.role == "teacher":
         return getSplitedCoursesByInscription (current_user.id)    
     else:
@@ -139,15 +141,18 @@ def getSplitedCoursesByInscription (id):
                 courseList.append(course)
         return render_template('dashboard.html', courseList = courseList , courseInscriptionList = courseInscriptionList)
     
-
+def checkBlockUser(id):
+    if(ModelUser.get_by_id(db,id).block == 0):
+        flash("¡USUARIO BLOQUEADO! conctacta con el administrador para seguir los pasos", "bloquedUser")
+    
 @login_manager_app.user_loader
 def load_user(id):
     return ModelUser.get_by_id(db , id)
 
-
 @app.route("/edit-user/<id>", methods=['GET', 'POST'])
 @login_required
 def editUser(id):
+    checkBlockUser(current_user.id)
     if(request.method == "POST" and current_user.role == "admin"):
         user = User(
            id,
@@ -199,6 +204,7 @@ def blockUser(id):
 @app.route("/course-details/<id>", methods=['GET', 'POST'])
 @login_required
 def getCourse(id):
+    checkBlockUser(current_user.id)
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
     if request.method == "GET":
@@ -208,6 +214,7 @@ def getCourse(id):
 @app.route("/add-course", methods=['GET', 'POST'])
 @login_required
 def addCourse():
+    checkBlockUser(current_user.id)
     if(request.method == "POST" and (current_user.role == "admin" or current_user.role == "teacher") ):
         course = Course(
             None,
@@ -224,6 +231,7 @@ def addCourse():
 @app.route("/edit-course/<id>", methods=['GET', 'POST'])
 @login_required
 def editCourse(id):
+    checkBlockUser(current_user.id)
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")    
     courseDB = ModelCourse.findById(db , id)
@@ -261,6 +269,7 @@ def deleteCourse(id):
     if (not id.isnumeric()):
         return render_template("error.html", message="Url no valida.")
     
+    checkBlockUser(current_user.id)
     course = ModelCourse.findById(db, id)
     if(current_user.role == "admin" or current_user.id == course.id_teacher.id):
         return render_template("delete.html", csrf_token = csrf, course = course)
@@ -270,6 +279,7 @@ def deleteCourse(id):
 @app.route("/delete-course", methods=['POST'])
 @login_required
 def deleteCoursePost():
+    checkBlockUser(current_user.id)
     idCourse = request.form['id_course']
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
@@ -292,6 +302,7 @@ def deleteCoursePost():
 @app.route("/inscription", methods=['GET', 'POST'])
 @login_required
 def inscriptionCourse():
+    checkBlockUser(current_user.id)
     if (request.method == "POST"):
         idCourse = request.form['courseId']
         ModelInscription.inscription(db, current_user, idCourse)
@@ -304,6 +315,7 @@ def inscriptionCourse():
 @app.route("/delete-inscription/<id>", methods=['GET', 'POST'])
 @login_required
 def deleteInscriptionCourse(id):
+    checkBlockUser(current_user.id)
     ModelInscription.deregistration(db, id)
     flash("Se elimino la inscripcion", "success")
     return redirect(url_for('dashboard'))
@@ -316,6 +328,7 @@ def deleteInscriptionCourse(id):
 @app.route("/attendance/<idCourse>/<idStudent>")
 @login_required
 def takeAttendance(idCourse, idStudent):
+    checkBlockUser(current_user.id)
     if(current_user.role == "teacher"):
         idInscriptionStudent = ModelInscription.findByStudentAndCourseId(db, idCourse, idStudent)
         date = dt.date.today()
