@@ -7,7 +7,7 @@ class ModelInscription:
             sql = "SELECT id FROM inscription WHERE id_user = '{}' AND id_course = '{}'".format(idStudent, idCourse)
             cursor.execute(sql)
             idInscription = cursor.fetchone()
-            return idInscription
+            return idInscription[0]
         except Exception as ex:
             return str(ex)
 

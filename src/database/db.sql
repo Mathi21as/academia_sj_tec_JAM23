@@ -40,5 +40,5 @@ CREATE TABLE IF NOT EXISTS `attendance` (
   id_inscription INT NOT NULL,
   `date` DATE NOT NULL,
   present TINYINT(1) DEFAULT 0 ,
-  FOREIGN KEY (id) REFERENCES inscription(id) ON DELETE CASCADE
+  FOREIGN KEY (id) REFERENCES inscription(id)
 );
