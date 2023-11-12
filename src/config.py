@@ -20,7 +20,7 @@ class appConfig():
     def init(app):
         app.config['MYSQL_HOST'] = 'localhost'
         app.config['MYSQL_USER'] = 'root'
-        app.config['MYSQL_PASSWORD'] = '154647572' # 'root1234' '154647572'
+        app.config['MYSQL_PASSWORD'] = 'root1234' # 'root1234' '154647572'
         app.config['MYSQL_DB'] = 'academia_jam2023'
         app.config['SECRET_KEY'] = "teeest"
 config = {

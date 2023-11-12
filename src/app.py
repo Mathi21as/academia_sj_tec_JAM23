@@ -176,22 +176,23 @@ def editUser(id):
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
 
-@app.route("/block-user/<id>", methods=['GET', 'POST'])
+@app.route("/block-user/<idCourse>/<idStudent>", methods=['GET', 'POST'])
 @login_required
-def blockUser(id):
-    if (not id.isnumeric()):
+def blockUser(idCourse, idStudent):
+    if (not idStudent.isnumeric()):
         return render_template("error.html", message="Url no valida.")
     if(current_user.role == "admin" or current_user.role == "teacher"):
         if request.method == "GET":
-            user = ModelUser.get_by_id(db, id)
-            return render_template("blockUser.html", csrf_token = csrf, user = user)
+            user = ModelUser.get_by_id(db, idStudent)
+            course = ModelCourse.findById(db, idCourse)
+            return render_template("blockUser.html", csrf_token = csrf, user = user, course = course)
         elif request.method == "POST":
-            blockedUser = ModelUser.modifyBlockUser(db, id)
+            blockedUser = ModelUser.modifyBlockUser(db, idStudent)
             if blockedUser:
                 flash("Estado de usuario cambiado!", "success")
-                return redirect(url_for('dashboard'))
+                return redirect(url_for(f"editCourse", id=idCourse))
             else:
-                user = ModelUser.get_by_id(db, id)
+                user = ModelUser.get_by_id(db, idStudent)
                 flash("Error modificando usuario", "error")
                 return render_template("blockUser.html", csrf_token = csrf, user = user)            
     else:
@@ -250,7 +251,6 @@ def editCourse(id):
         inscriptedStudents = ModelUser.getAllInscriptedStudentsByIdCourse(db, id)
         inscriptedStudentsUnblocked = []
         inscriptedStudentsBlocked = []
-        # TODO: ver si se deja la tabla de estudiantes bloqueados
         for inscriptedStudent in inscriptedStudents:
             if(inscriptedStudent[7] == 1):
                 inscriptedStudentsBlocked.append(inscriptedStudent)
@@ -345,6 +345,13 @@ def takeAttendance(idCourse, idStudent):
         return redirect(url_for(f"editCourse", id = idCourse))
     else:
         return render_template("error.html", message="Usted no posee los privilegios para acceder a esta URL.")
+
+
+@app.route("/getAttendance/<id>")
+@login_required
+def getAttendanceCount(id):
+    ModelAttendance.findCountAttendanceOfAStudent(db, idInscription=8)
+    return redirect(url_for("dashboard"))
 
 
 # -------------- ASISTENCIA --------------- -------------- ASISTENCIA ----------------------------------------- -------------- ASISTENCIA -------------- 

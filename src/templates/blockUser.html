@@ -3,7 +3,7 @@
 {% block title %}Academia - Block user{% endblock %}
 
 {% block customCSS %}
-<link rel="stylesheet" href="{{url_for('static', filename = 'css/blockUser.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename = 'css/blockUser.css')}}">
 {% endblock %}
 
 {% block body %}
@@ -11,11 +11,11 @@
 <div class="main_card">
     <img src="{{url_for('static', filename = 'icons/delete-icon.svg')}}" width="120px" alt="delete-icon">
     <h3>Bloqueo y desbloqueo de usuarios</h3>
-    <form class="form_div" action="/block-user/{{user.id}}" method="POST">
+    <form class="form_div" action="/block-user/{{course.id}}/{{user.id}}" method="POST">
         <label>Desea modificar el estado del usuario "{{user.name}}"?</label>
         <div>
             <button class="btn btn-danger" type="submit">Cambiar estado usuario</button>
-            <a href="/dashboard">Cancelar</a>
+            <a href="/edit-course/{{course.id}}">Cancelar</a>
         </div>
     </form>
 </div>

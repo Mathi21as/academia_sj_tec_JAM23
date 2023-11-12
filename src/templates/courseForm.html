@@ -125,7 +125,7 @@
 
                                 {% if student[7] == 1 %}
                                 <td style="width: min-content" colspan="2" class="px-1 py-2">
-                                    <a class="btn btn-warning" href="/block-user/{{student[0]}}">Desbloquear</a>
+                                    <a class="btn btn-warning" href="/block-user/{{course.id}}/{{student[0]}}">Desbloquear</a>
                                 </td>
                                 {% else %}
                                 <td class="px-1 py-2">
@@ -133,7 +133,7 @@
                                         Dar presente</a>
                                 </td>
                                 <td style="width: min-content" colspan="2">
-                                    <a class="btn btn-danger" href="/block-user/{{student[0]}}">Bloquear</a>
+                                    <a class="btn btn-danger" href="/block-user/{{course.id}}/{{student[0]}}">Bloquear</a>
                                 </td>                            
                                 {% endif %}
                             {% endif %}

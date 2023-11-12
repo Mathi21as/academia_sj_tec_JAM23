@@ -50,7 +50,7 @@ class ModelCourse():
     def findById(self, db, id):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT * FROM course WHERE id = '{}'".format(id)
+            sql = "SELECT id, id_teacher, name, duration, description FROM course WHERE id = '{}'".format(id)
             cursor.execute(sql)
             courseTupla = cursor.fetchone()
             course = Course(courseTupla[0], courseTupla[1], courseTupla[2], courseTupla[3], courseTupla[4])
