@@ -26,7 +26,7 @@
 {% endwith %}
 
 <!-- LISTA DE INSCRIPCIONES -->
-{% if current_user.role != "admin"  %}
+{% if current_user.role != "admin" and current_user.block != 1%}
 <div class="container containerTableList CoursesList">    
     <h4>Listado de inscripciones</b></h4>
     {% if courseInscriptionList %}
@@ -64,6 +64,7 @@
 {% endif  %}
 
 <!-- LISTA DE CURSOS -->
+{% if current_user.block != 1 %}
 <div class="container containerTableList CoursesList">    
     <h4>Listado de cursos</b></h4>
     {% if current_user.role == "admin" or current_user.role == "teacher"%}
@@ -71,7 +72,7 @@
         <a class="btn btn-primary" href="/add-course" role="button">Agregar curso</a>
     </div>
     {% endif %}
-    {% if courseList %}
+    {% if courseList%}
     <table class="table tableList">
         <thead>
             <tr>
@@ -118,6 +119,7 @@
     {% endif %}
 
 </div>
+{% endif %}
 
 {% if current_user.role == "admin" %}
 <!-- LISTA DE PROFES -->
