@@ -1,10 +1,10 @@
 class ModelAttendance:
     @classmethod
     def takeAttendance(self, db, attendance):
-        try:
+        try:            
             cursor = db.connection.cursor()
-            sql = "INSERT INTO attendance (id_inscription, date, present);"
-            cursor.execute(sql, (attendance.idInscription, attendance.date, attendance.present))
+            sql = "INSERT INTO attendance (id_inscription, date, present) VALUES (%s, %s, %s);"
+            cursor.execute(sql, (attendance.idInscription[0], attendance.date, attendance.present))
             db.connection.commit()
             cursor.close()
             return True
