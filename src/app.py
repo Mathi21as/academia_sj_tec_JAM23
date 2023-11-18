@@ -17,6 +17,8 @@ from models.entities.Course import Course
 from models.entities.Attendance import Attendance
 # from routers.authRouter import authRouter
 
+import os
+
 
 load_dotenv()
 
@@ -222,7 +224,8 @@ def addCourse():
             request.form['course_teacher'] if current_user.role == "admin" else current_user.id,
             request.form['course_name'],
             request.form['course_duration'],
-            request.form['course_description'])
+            request.form['course_description'],
+            "./images/"+request.form['course_name']+".png")
         ModelCourse.create(db, course)
         return redirect(url_for('dashboard'))
     else:
@@ -242,7 +245,10 @@ def editCourse(id):
             request.form['course_teacher'] if current_user.role == "admin" else current_user.id,
             request.form['course_name'],
             request.form['course_duration'],
-            request.form['course_description'])
+            request.form['course_description'],
+            "./images/"+request.form['course_name']+".png")
+        imagen = request.files['imagen']
+        imagen.save(os.path.join("./images", course.name + ".png"))
         ModelCourse.update(db, course, id)
         return redirect(url_for('dashboard'))
     elif(current_user.role == "admin" or current_user.id == courseDB.id_teacher.id):
@@ -284,7 +290,7 @@ def deleteCoursePost():
     if (not idCourse.isnumeric()):
         return render_template("error.html", message="Url no valida.")
     #se valida que el proferor que quiera elminiar un curso sea el mismo que lo imparte
-    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(idCourse).id_teacher.id):
+    elif (current_user.role == "admin" or current_user.id == ModelCourse.findById(db, idCourse).id_teacher.id):
         ModelCourse.delete(db, idCourse)
         return redirect(url_for('dashboard'))
     else:

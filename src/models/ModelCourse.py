@@ -50,10 +50,10 @@ class ModelCourse():
     def findById(self, db, id):
         try:
             cursor = db.connection.cursor()
-            sql = "SELECT id, id_teacher, name, duration, description FROM course WHERE id = '{}'".format(id)
+            sql = "SELECT id, id_teacher, name, duration, description, url_image FROM course WHERE id = '{}'".format(id)
             cursor.execute(sql)
             courseTupla = cursor.fetchone()
-            course = Course(courseTupla[0], courseTupla[1], courseTupla[2], courseTupla[3], courseTupla[4])
+            course = Course(courseTupla[0], courseTupla[1], courseTupla[2], courseTupla[3], courseTupla[4], courseTupla[5])
 
             sql = "SELECT * FROM user WHERE id = '{}'".format(course.id_teacher)
             cursor.execute(sql)
@@ -79,8 +79,8 @@ class ModelCourse():
         try:
             print(course.id_teacher)
             cursor = db.connection.cursor()
-            sql = "INSERT INTO course (id_teacher, name, duration, description) VALUES(%s, %s, %s, %s);"
-            cursor.execute(sql, (course.id_teacher, course.name, course.duration, course.description))
+            sql = "INSERT INTO course (id_teacher, name, duration, description, url_image) VALUES(%s, %s, %s, %s, %s);"
+            cursor.execute(sql, (course.id_teacher, course.name, course.duration, course.description, course.url_image))
             db.connection.commit()
             cursor.close()
             return True

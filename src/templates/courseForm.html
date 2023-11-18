@@ -19,12 +19,12 @@
         {% endif %}
     </div>
     {% if mode == "edit" %}
-        <form class="form-signin form_div" action="/edit-course/{{course.id}}" method="POST">
+        <form class="form-signin form_div" enctype="multipart/form-data" action="/edit-course/{{course.id}}" method="POST">
     {% else %}
-        <form class="form-signin form_div" action="/add-course" method="POST">
+        <form class="form-signin form_div" enctype="multipart/form-data" action="/add-course" method="POST">
     {% endif %}
         <div class="form_fields">
-            <input type="image" width="120" height="120">
+            <input type="file" name="imagen" width="120" height="120">
         {% with messages = get_flashed_messages() %}
 
         {% if messages  %}

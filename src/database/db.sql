@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `course` (
   `name` VARCHAR(45) NOT NULL,
   `duration` VARCHAR(45) NOT NULL,
   `description` MEDIUMTEXT NOT NULL,
+  url_image VARCHAR(200),
   FOREIGN KEY (`id_teacher`) REFERENCES user(id) ON DELETE CASCADE
 );
 
