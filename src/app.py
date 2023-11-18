@@ -225,7 +225,7 @@ def addCourse():
             request.form['course_name'],
             request.form['course_duration'],
             request.form['course_description'],
-            "./images/"+request.form['course_name']+".png")
+            "/static/img/"+request.form['course_name']+".png")
         ModelCourse.create(db, course)
         return redirect(url_for('dashboard'))
     else:
@@ -246,9 +246,9 @@ def editCourse(id):
             request.form['course_name'],
             request.form['course_duration'],
             request.form['course_description'],
-            "./images/"+request.form['course_name']+".png")
+            "/static/img/"+request.form['course_name']+".png")
         imagen = request.files['imagen']
-        imagen.save(os.path.join("./images", course.name + ".png"))
+        imagen.save(os.path.join("./src/static/img", course.name + ".png"))
         ModelCourse.update(db, course, id)
         return redirect(url_for('dashboard'))
     elif(current_user.role == "admin" or current_user.id == courseDB.id_teacher.id):
