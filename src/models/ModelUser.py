@@ -8,8 +8,8 @@ class ModelUser():
     def register(self , db, user):
         try:
             cursor = db.connection.cursor()
-            sql = """INSERT INTO user (`name`, `last_name`, `phone`, `dni`, `email`, `password`, `role`, `gender`)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
+            sql = """INSERT INTO user (`name`, `last_name`, `phone`, `dni`, `email`, `password`, `role`, `gender`, url_image)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
             if user.email == "admin@admin.com" :
                 user.role = "admin"
             cursor.execute(sql, (                
@@ -20,7 +20,8 @@ class ModelUser():
                 user.email, 
                 User.hash_password(user.password), 
                 user.role,
-                user.gender))
+                user.gender,
+                user.url_image))
             db.connection.commit()
             cursor.close()
 
@@ -49,14 +50,14 @@ class ModelUser():
     def login(self , db, user):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT id, name, last_name, phone, dni, email, password, gender, block, role   FROM user 
+            sql = """SELECT id, name, last_name, phone, dni, email, password, gender, block, url_image, role FROM user 
                         WHERE email = '{}'""".format(user.email)
             cursor.execute(sql)
             row = cursor.fetchone()
             cursor.close()
             if row != None:
                 validPassword = User.check_password(row[6] , user.password)
-                return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8], row[9])
+                return User(row[0], row[1], row[2], row[3], row[4], row[5] , validPassword, row[7], row[8], row[9], row[10])
             else:
                 return None
         except Exception as ex:

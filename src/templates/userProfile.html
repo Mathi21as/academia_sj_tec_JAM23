@@ -19,8 +19,7 @@
     <div>
         <div class="container containerTableList userProfileContainer">
             <div class="profileImgContainer">
-                <img src="../static/img/logoJAM-welcome.png">
-                <button> Btn cambiar foto</button>
+                <img src="{{current_user.url_image}}" width="100%">
             </div>
             <div class="infoProfileContainer">
                 <div>
@@ -63,11 +62,15 @@
             </div>
         </div>
 
-        <form  class="form-updateProfile" action="/profile" method="POST">        
+        <form  class="form-updateProfile" enctype="multipart/form-data" action="/profile" method="POST">
             <h5>Datos editables de tu perfil </h5>   
             <div class="inputsContainer">           
               <input type="hidden" name="csrf_token" value="{{csrf_token}}"/> <!--  para que formulario de login tenga codigo token para csrf-->
               <input type="hidden" name="email" value="{{current_user.email}}"/> <!--  para poder tener la direccion email para actualizar -->
+              <div class="formInputUpdateProfile">
+                  <label for="photo">Foto de perfil</label>
+                  <input type="file" name="photo" id="photo">
+              </div>
               <div class="formInputUpdateProfile">
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" class="form-control" name="name" value={{current_user.name}}>

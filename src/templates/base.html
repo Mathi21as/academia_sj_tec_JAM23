@@ -29,7 +29,7 @@
                 {% if current_user.id != null %}
                     <a href="/profile" class="icon_user">
                         <p>{{current_user.name}}</p>
-                        <img src="{{url_for('static', filename = 'icons/lucide_user-circle.svg')}}" width="40px"/>
+                        <img src="{{current_user.url_image}}" width="40px"/>
                     </a>
                     <a class="btn" href="{{url_for('logout')}}"> Cerrar sesion </a>
                 {% endif %}

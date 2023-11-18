@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role` varchar(7) NOT NULL,
   `gender` varchar(50),
   `block` TINYINT(1) DEFAULT 0 ,
+  url_image VARCHAR(200),
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `dni_UNIQUE` (`dni`),

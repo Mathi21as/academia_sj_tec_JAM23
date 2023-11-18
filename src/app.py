@@ -52,8 +52,8 @@ def register():
                         request.form['email'] , 
                         request.form['password'], 
                         request.form['gender'] ,
-                        0
-                        )
+                        "/static/img/users/" + request.form['last_name'] + request.form['name'] + ".png",
+                        0)
             registerUser = ModelUser.register(db, user)
             if registerUser:
                 loguedUser = ModelUser.login(db, user)
@@ -72,9 +72,8 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':        
-        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], 0, None )
+        user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], 0, None, None, None )
         loguedUser = ModelUser.login(db, user)
-
         if loguedUser != None:
             if loguedUser.password:
                 login_user(loguedUser)
@@ -97,7 +96,8 @@ def logout():
 @login_required
 def profile():
     checkBlockUser(current_user.id)
-    if request.method == 'GET': 
+    if request.method == 'GET':
+        current_user.url_image = "/static/img/users/" + current_user.last_name + current_user.name + ".png"
         return render_template('userProfile.html')
     elif request.method == 'POST':
         user = User( 0 ,
@@ -108,8 +108,11 @@ def profile():
             request.form['email'] , 
             None ,
             request.form['gender'] ,
-            None 
-            )
+            None,
+            None,
+            None)
+        imagen = request.files['photo']
+        imagen.save(os.path.join("./src/static/img/users", user.last_name + user.name + ".png"))
         updatedUser = ModelUser.udpateProfile(db, user)
         if updatedUser:
             flash("Actualizacion correcta!", "success")
@@ -121,6 +124,7 @@ def profile():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    current_user.url_image = "/static/img/users/" + current_user.last_name + current_user.name + ".png"
     checkBlockUser(current_user.id)
     if current_user.role == "student" or current_user.role == "teacher":
         return getSplitedCoursesByInscription (current_user.id)    
@@ -167,7 +171,6 @@ def editUser(id):
            None,
            None,
            request.form['role'])
-        print(user.role)
         updatedUser = ModelUser.updateByAdmin(db, user)      
         if updatedUser:
             flash("Actualizacion de usuario correcta", "success")
@@ -226,6 +229,8 @@ def addCourse():
             request.form['course_duration'],
             request.form['course_description'],
             "/static/img/"+request.form['course_name']+".png")
+        imagen = request.files['photo']
+        imagen.save(os.path.join("./src/static/img", course.name + ".png"))
         ModelCourse.create(db, course)
         return redirect(url_for('dashboard'))
     else:

@@ -23,10 +23,10 @@
     {% else %}
         <form class="form-signin form_div" enctype="multipart/form-data" action="/add-course" method="POST">
     {% endif %}
-        <div class="form_fields">
-            <div class="d-flex flex-column">
+        <div class="form_fields gap-4">
+            <div class="d-flex flex-column gap-3">
                 {% if mode == "edit" %}
-            <input type="image" src="{{course.url_image}}"  width="150" height="150">
+            <input class="mx-auto" type="image" src="{{course.url_image}}"  width="250">
             {% endif %}
             <input type="file" name="imagen" width="50px">
             </div>
