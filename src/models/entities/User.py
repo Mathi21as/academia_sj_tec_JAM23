@@ -4,7 +4,7 @@ from flask_login import UserMixin
 class User(UserMixin):
 
 # clase identica a la bd, es para mapear los objetos de la bd
-    def __init__ (self , id, name, last_name, phone, dni, email, password, gender, block , url_image, role="student") -> None:
+    def __init__ (self , id, name, last_name, phone, dni, email, password, gender, block, url_image, role) -> None:
         self.id = id
         self.name = name
         self.last_name = last_name

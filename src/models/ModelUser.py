@@ -2,16 +2,17 @@ from models.entities.User import User
 from flask_mysqldb import MySQL
 
 
-class ModelUser():
+class ModelUser:
 
     @classmethod
     def register(self , db, user):
         try:
             cursor = db.connection.cursor()
-            sql = """INSERT INTO user (`name`, `last_name`, `phone`, `dni`, `email`, `password`, `role`, `gender`, url_image)
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+            sql = "INSERT INTO user (`name`, `last_name`, `phone`, `dni`, `email`, `password`, `role`, `gender`, url_image) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s);"
             if user.email == "admin@admin.com" :
                 user.role = "admin"
+            else:
+                user.role = "student"
             cursor.execute(sql, (                
                 user.name, 
                 user.last_name, 
@@ -24,7 +25,6 @@ class ModelUser():
                 user.url_image))
             db.connection.commit()
             cursor.close()
-
             return True
         except Exception as ex:
             if ex.args[0] == 1062:
@@ -67,13 +67,13 @@ class ModelUser():
     def get_by_id(self , db, id):
         try:
             cursor = db.connection.cursor()
-            sql = """SELECT id, name, last_name, phone, dni, email,gender, block, role  FROM user 
+            sql = """SELECT id, name, last_name, phone, dni, email, gender, block, role  FROM user 
                         WHERE id = '{}'""".format(id)
             cursor.execute(sql)
             row = cursor.fetchone()
             cursor.close()
             if row != None:
-                return User(row[0], row[1], row[2], row[3], row[4], row[5] , None, row[6], row[7], row[8])
+                return User(row[0], row[1], row[2], row[3], row[4], row[5] , None, row[6], row[7], None, row[8])
             else:
                 return None
         except Exception as ex:

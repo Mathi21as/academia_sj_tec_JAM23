@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `phone` varchar(14) DEFAULT NULL,
   `dni` varchar(9) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(150) NOT NULL,
+  `password` varchar(350) NOT NULL,
   `role` varchar(7) NOT NULL,
   `gender` varchar(50),
   `block` TINYINT(1) DEFAULT 0 ,

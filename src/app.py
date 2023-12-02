@@ -52,13 +52,16 @@ def register():
                         request.form['email'] , 
                         request.form['password'], 
                         request.form['gender'] ,
+                         0,
                         "/static/img/users/" + request.form['last_name'] + request.form['name'] + ".png",
-                        0)
+                         None
+                        )
             registerUser = ModelUser.register(db, user)
+            print(registerUser)
             if registerUser:
                 loguedUser = ModelUser.login(db, user)
                 login_user(loguedUser)
-                EmailManager.sendEmail(user.email)
+                #EmailManager.sendEmail(user.email)
                 return redirect(url_for('dashboard'))
             else:                
                 flash("Email ya existe, intenta logueandote", "error")
@@ -74,6 +77,7 @@ def login():
     if request.method == 'POST':        
         user = User( 0 , None, None, None, None, request.form['email'], request.form['password'], 0, None, None, None )
         loguedUser = ModelUser.login(db, user)
+        print(vars(loguedUser))
         if loguedUser != None:
             if loguedUser.password:
                 login_user(loguedUser)
@@ -170,6 +174,7 @@ def editUser(id):
            None,
            None,
            None,
+           None,
            request.form['role'])
         updatedUser = ModelUser.updateByAdmin(db, user)      
         if updatedUser:
@@ -229,7 +234,7 @@ def addCourse():
             request.form['course_duration'],
             request.form['course_description'],
             "/static/img/"+request.form['course_name']+".png")
-        imagen = request.files['photo']
+        imagen = request.files['imagen']
         imagen.save(os.path.join("./src/static/img", course.name + ".png"))
         ModelCourse.create(db, course)
         return redirect(url_for('dashboard'))
